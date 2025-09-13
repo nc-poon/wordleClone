@@ -53,3 +53,44 @@ export function isGameOver(guesses: string[], won: boolean): boolean {
 export function hasWon(guess: string, targetWord: string): boolean {
     return guess === targetWord;
 }
+
+
+/**
+ * Find candidate words for Absurdle mode
+ * Returns words that would give the least helpful feedback
+ */
+export function findAbsurdleCandidates(guess: string, candidates: string[]): string[] {
+
+    // check result for all words and record correct,present count and allabsent
+    const wordsWithScores = candidates.map((word) => {
+        const result = checkGuess(guess, word);
+        const correctCount = result.filter((r) => r.status === "correct").length;
+        const presentCount = result.filter((r) => r.status === "present").length;
+        const allAbsent = result.every((r) => r.status === "absent");
+
+        return {
+            word,
+            correctCount,
+            presentCount,
+            allAbsent,
+        };
+    });
+
+    // If there are words with all absent, return them
+    const allAbsentWords = wordsWithScores.filter((w) => w.allAbsent);
+    if (allAbsentWords.length > 0) {
+        return allAbsentWords.map((w) => w.word);
+    }
+
+    // No words with all absent, so apply hierarchy and return only 1 word
+    // Sort by hierarchy: fewer correct first, then fewer present if correct counts are equal
+    wordsWithScores.sort((a, b) => {
+        if (a.correctCount !== b.correctCount) {
+            return a.correctCount - b.correctCount; // fewer correct first
+        }
+        return a.presentCount - b.presentCount; // fewer present if correct counts are equal
+    });
+
+    // Return only the first word (best according to hierarchy)
+    return [wordsWithScores[0].word];
+}

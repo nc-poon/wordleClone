@@ -1,11 +1,17 @@
 import React from "react";
 import { MAX_GUESSES } from "../../../utils/wordleUtils";
 import "./GameStats.css";
+export interface CustomStat {
+  label: string;
+  value: string;
+}
+
 export interface GameStatsProps {
   guessCount: number;
   mode?: string;
   targetWord?: string;
   showDebugTarget?: boolean;
+  customStats?: CustomStat[];
 }
 
 export default function GameStats({
@@ -13,6 +19,7 @@ export default function GameStats({
   mode,
   targetWord,
   showDebugTarget = false,
+  customStats = [],
 }: GameStatsProps) {
   return (
     <div className="game-stats">
@@ -29,6 +36,13 @@ export default function GameStats({
           <span className="stat-value">{mode}</span>
         </div>
       )}
+
+      {customStats.map((stat, index) => (
+        <div key={index} className="stat-item">
+          <span className="stat-label">{stat.label}:</span>
+          <span className="stat-value">{stat.value}</span>
+        </div>
+      ))}
 
       {showDebugTarget && targetWord && (
         <div className="stat-item debug-info">
