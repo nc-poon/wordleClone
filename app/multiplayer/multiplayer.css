@@ -1,0 +1,196 @@
+/* ===== TWO PLAYER WORDLE STYLES ===== */
+.two-player-wordle {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 2rem;
+  }
+  
+  .score-display {
+    background: linear-gradient(135deg, #f8fafc, #e2e8f0);
+    padding: 1rem 2rem;
+    border-radius: 12px;
+    border: 1px solid #cbd5e1;
+    display: inline-block;
+    margin-bottom: 1rem;
+  }
+  
+  /* Dual Boards Layout */
+  .dual-boards {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 2rem;
+    margin-bottom: 2rem;
+  }
+  
+  @media (max-width: 768px) {
+    .dual-boards {
+      grid-template-columns: 1fr;
+      gap: 1.5rem;
+    }
+  }
+  
+  .player-board {
+    background: linear-gradient(135deg, rgba(255, 255, 255, 0.9), rgba(248, 250, 252, 0.9));
+    border: 2px solid #e2e8f0;
+    border-radius: 16px;
+    padding: 1.5rem;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+    transition: all 0.3s ease;
+  }
+  
+  .player-board:hover {
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+  }
+  
+  .player-board.player-board {
+    border-color: #3b82f6;
+    background: linear-gradient(135deg, rgba(59, 130, 246, 0.1), rgba(147, 197, 253, 0.05));
+  }
+  
+  .player-board.bot-board {
+    border-color: #f59e0b;
+    background: linear-gradient(135deg, rgba(245, 158, 11, 0.1), rgba(251, 191, 36, 0.05));
+  }
+  
+  .board-header {
+    margin-bottom: 1rem;
+  }
+  
+  .board-header h3 {
+    color: #1e293b;
+    margin-bottom: 0.5rem;
+  }
+  
+  /* Mini Game Board */
+  .mini-game-board {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+  }
+  
+  .mini-letter-box {
+    width: 35px;
+    height: 35px;
+    border: 2px solid #d1d5db;
+    border-radius: 6px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+    font-size: 0.875rem;
+    text-transform: uppercase;
+    transition: all 0.3s ease;
+    background: #ffffff;
+  }
+  
+  .mini-letter-box.empty {
+    border-color: #e5e7eb;
+    background: #f9fafb;
+  }
+  
+  .mini-letter-box.filled {
+    border-color: #6b7280;
+    background: #ffffff;
+    transform: scale(1.02);
+  }
+  
+  .mini-letter-box.correct {
+    background: linear-gradient(135deg, #10b981, #059669);
+    border-color: #047857;
+    color: white;
+  }
+  
+  .mini-letter-box.present {
+    background: linear-gradient(135deg, #f59e0b, #d97706);
+    border-color: #b45309;
+    color: white;
+  }
+  
+  .mini-letter-box.absent {
+    background: linear-gradient(135deg, #6b7280, #4b5563);
+    border-color: #374151;
+    color: white;
+  }
+  
+  .board-status {
+    padding: 0.5rem;
+    border-radius: 8px;
+    background: rgba(248, 250, 252, 0.8);
+    text-align: center;
+    font-size: 0.875rem;
+    min-height: 2rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  /* Setup and Word Selection Phases */
+  .setup-phase,
+  .word-selection-phase,
+  .round-end-phase {
+    background: linear-gradient(135deg, #ffffff, #f8fafc);
+    border-radius: 16px;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
+    border: 1px solid #e2e8f0;
+  }
+  
+  .countdown-timer {
+    background: linear-gradient(135deg, #dbeafe, #bfdbfe);
+    padding: 1.5rem;
+    border-radius: 12px;
+    border: 2px solid #3b82f6;
+  }
+  
+  .round-summary {
+    background: linear-gradient(135deg, #f0f9ff, #e0f2fe);
+    padding: 1.5rem;
+    border-radius: 12px;
+    border: 1px solid #0ea5e9;
+  }
+  
+  /* Player Input */
+  .player-input {
+    background: linear-gradient(135deg, rgba(255, 255, 255, 0.9), rgba(248, 250, 252, 0.9));
+    border: 2px solid #3b82f6;
+    border-radius: 16px;
+    padding: 1.5rem;
+    box-shadow: 0 4px 12px rgba(59, 130, 246, 0.1);
+  }
+  
+  /* Turn Indicators */
+  .current-row {
+    transform: scale(1.02);
+    box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.3);
+    border-radius: 8px;
+  }
+  
+  /* Animation for bot thinking */
+  @keyframes thinking {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.6; }
+  }
+  
+  .bot-board .board-status {
+    animation: thinking 2s infinite;
+  }
+  
+  /* Responsive adjustments */
+  @media (max-width: 640px) {
+    .two-player-wordle {
+      padding: 1rem;
+    }
+    
+    .mini-letter-box {
+      width: 30px;
+      height: 30px;
+      font-size: 0.75rem;
+    }
+    
+    .player-board {
+      padding: 1rem;
+    }
+    
+    .dual-boards {
+      gap: 1rem;
+    }
+  }
