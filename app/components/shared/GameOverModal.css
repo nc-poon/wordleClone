@@ -1,0 +1,129 @@
+/* ===== GAME OVER MODAL ===== */
+.game-over-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.5);
+    backdrop-filter: blur(4px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1000;
+    animation: fadeInOverlay 0.3s ease-out;
+}
+.game-over-modal {
+    background: linear-gradient(135deg, #ffffff, #f8fafc);
+    border-radius: 20px;
+    padding: 2.5rem;
+    max-width: 400px;
+    width: 90%;
+    text-align: center;
+    box-shadow: 
+        0 25px 50px rgba(0, 0, 0, 0.25),
+        0 0 0 1px rgba(255, 255, 255, 0.1);
+    position: relative;
+    overflow: hidden;
+}
+.game-over-modal::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 4px;
+    background: linear-gradient(90deg, #3b82f6, #8b5cf6, #ef4444, #f59e0b);
+}
+.modal-content {
+    position: relative;
+    z-index: 2;
+}
+  
+/* Victory Styles */
+.victory-icon {
+    font-size: 4rem;
+    margin-bottom: 1rem;
+}
+.victory-title {
+    font-size: 2rem;
+    font-weight: bold;
+    color: #059669;
+    margin-bottom: 1rem;
+}
+.victory-text, .defeat-text, .gameover-text {
+    font-size: 1.1rem;
+    color: #4b5563;
+    margin-bottom: 2rem;
+    line-height: 1.6;
+}
+.defeat-icon, .gameover-icon {
+    font-size: 3rem;
+    margin-bottom: 1rem;
+    display: block;
+}
+.defeat-title {
+    font-size: 1.8rem;
+    font-weight: bold;
+    color: #dc2626;
+margin-bottom: 1rem;
+}
+.gameover-title {
+    font-size: 1.8rem;
+    font-weight: bold;
+    color: #7c3aed;
+    margin-bottom: 1rem;
+}
+.word-highlight {
+    font-weight: bold;
+    color: #1e293b;
+    padding: 0.2rem 0.4rem;
+    background: #f1f5f9;
+    border-radius: 6px;
+}
+.attempts-highlight {
+    font-weight: bold;
+    color: #059669;
+}
+
+/* Play Again Button */
+    .play-again-button {
+    background: linear-gradient(135deg, #059669, #047857);
+    color: white;
+    border: none;
+    padding: 1rem 2rem;
+    border-radius: 12px;
+    font-size: 1.1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 
+        0 4px 12px rgba(5, 150, 105, 0.4),
+        inset 0 1px 0 rgba(255, 255, 255, 0.2);
+    }
+    .play-again-button:hover {
+    background: linear-gradient(135deg, #047857, #065f46);
+    transform: translateY(-2px);
+    box-shadow: 
+        0 8px 20px rgba(5, 150, 105, 0.4),
+        inset 0 1px 0 rgba(255, 255, 255, 0.2);
+    }
+
+@keyframes fadeInOverlay {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+@media (max-width: 640px) {
+.game-over-modal {
+    padding: 2rem 1.5rem;
+}
+
+.victory-title, .defeat-title, .gameover-title {
+    font-size: 1.5rem;
+}
+
+.victory-text, .defeat-text, .gameover-text {
+    font-size: 1rem;
+}
+}
