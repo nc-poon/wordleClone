@@ -5,6 +5,7 @@ import {
   MAX_GUESSES,
   WORD_LENGTH,
 } from "../../../utils/wordleUtils";
+import "./wordle.css";
 
 interface WordleBoardProps {
   guesses: string[];
