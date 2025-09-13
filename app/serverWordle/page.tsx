@@ -23,7 +23,6 @@ export default function ServerWordle() {
   const [gameOver, setGameOver] = useState<boolean>(false);
   const [won, setWon] = useState<boolean>(false);
   const [loading, setLoading] = useState<boolean>(false);
-  // Change this to store ALL results, not just the last one
   const [allResults, setAllResults] = useState<LetterResult[][]>([]);
 
   // create new game session
@@ -78,7 +77,7 @@ export default function ServerWordle() {
       setCurrentGuess("");
       setGameOver(false);
       setWon(false);
-      setAllResults([]); // Reset all results
+      setAllResults([]);
       setLoading(false);
     } catch (error) {
       console.error("Failed to initialize server:", error);
@@ -96,8 +95,6 @@ export default function ServerWordle() {
       const newGuesses = [...guesses, currentGuess];
       setGuesses(newGuesses);
       setCurrentGuess("");
-
-      // APPEND the new result to all results instead of replacing
       setAllResults((prevResults) => [...prevResults, result.result]);
 
       setWon(result.won);
@@ -132,9 +129,6 @@ export default function ServerWordle() {
   useEffect(() => {
     initializeGame();
   }, []);
-
-  // Now you have all results stored in allResults
-  // No need to prepare boardResults - just use allResults directly
 
   // Render game over content
   const renderGameOverContent = () => {
@@ -208,7 +202,7 @@ export default function ServerWordle() {
           guesses={guesses}
           currentGuess={currentGuess}
           showCurrentGuess={true}
-          results={allResults} // Use allResults instead of boardResults
+          results={allResults}
         />
       </div>
 
