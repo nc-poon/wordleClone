@@ -1,6 +1,6 @@
 # 🎯 Five-Letter Word Game
 
-**Note**: This is an educational project inspired by popular word-guessing games. It is not affiliated with or endorsed by The New York Times Company or the original Wordle game.
+**Note**: This project is not affiliated with or endorsed by The New York Times Company or the original Wordle game.
 
 ## 🚀 Quick Start
 
