@@ -93,6 +93,7 @@ export class SmartBot {
     private triedPositions: Map<string, Set<number>> = new Map();
     private guessHistory: string[] = [];
 
+    // init
     constructor() {
         this.reset();
     }
@@ -101,7 +102,7 @@ export class SmartBot {
         this.correctLetters = {};
         this.presentLetters = new Set();
         this.absentLetters = new Set();
-        this.triedPositions = new Map();
+        this.triedPositions = new Map(); // value and position
         this.guessHistory = [];
     }
 
@@ -128,7 +129,6 @@ export class SmartBot {
             if (status === "correct") {
                 // Letter is in correct position
                 this.correctLetters[i] = letter;
-                this.presentLetters.add(letter);
                 console.log(`  Correct: ${letter} at position ${i}`);
 
             } else if (status === "present") {
@@ -178,10 +178,8 @@ export class SmartBot {
             usedLetters.add(letter);
         }
 
-        // Then, place present letters in valid positions
+        // Then, for correct value wrong pos try new pos
         for (const letter of this.presentLetters) {
-            if (usedLetters.has(letter)) continue; // Already placed
-
             const triedPositions = this.triedPositions.get(letter) || new Set();
 
             // Find an empty position that hasn't been tried
@@ -194,35 +192,27 @@ export class SmartBot {
             }
         }
 
-        // Fill remaining positions with strategic letters
-        const commonLetters = ['R', 'S', 'T', 'L', 'N', 'C', 'Y', 'H', 'P', 'M', 'D', 'G', 'B', 'F', 'W', 'K', 'V', 'X', 'Z', 'J', 'Q'];
-
+        // Fill remaining positions char not in absent list
         for (let pos = 0; pos < 5; pos++) {
             if (guess[pos] === '') {
-                // Find a letter we haven't tried yet and isn't absent
-                for (const letter of commonLetters) {
-                    if (!usedLetters.has(letter) && !this.absentLetters.has(letter)) {
-                        guess[pos] = letter;
-                        usedLetters.add(letter);
-                        break;
+                const availableLetters = [];
+                for (let charCode = 65; charCode <= 90; charCode++) { // A=65 to Z=90
+                    const letter = String.fromCharCode(charCode);
+                    if (!this.absentLetters.has(letter)) {
+                        availableLetters.push(letter);
                     }
                 }
 
-                // If still empty, use any remaining letter
-                if (guess[pos] === '') {
-                    for (let charCode = 65; charCode <= 90; charCode++) {
-                        const letter = String.fromCharCode(charCode);
-                        if (!usedLetters.has(letter) && !this.absentLetters.has(letter)) {
-                            guess[pos] = letter;
-                            usedLetters.add(letter);
-                            break;
-                        }
-                    }
+                // Pick a random available char
+                if (availableLetters.length > 0) {
+                    const randomIndex = Math.floor(Math.random() * availableLetters.length);
+                    const selectedLetter = availableLetters[randomIndex];
+                    guess[pos] = selectedLetter;
                 }
             }
         }
 
-        const result = guess.join('');
+        const result = guess.join(''); // join the char to string
         console.log('SmartBot strategic guess:', result);
         return result || getRandomWord();
     }
