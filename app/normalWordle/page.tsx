@@ -7,7 +7,7 @@ import GameOverModal from "@/app/components/shared/GameOverModal";
 import LoadingSpinner from "@/app/components/shared/LoadingSpinner";
 import GuessInput from "@/app/components/shared/GuessInput";
 import { getRandomWord, isGameOver, hasWon } from "@/utils/wordleUtils";
-import { WORD_LENGTH } from "@/constants";
+import { WORD_LENGTH, DEBUG } from "@/gameConfigs";
 import {
   createKeyboardHandler,
   createInputChangeHandler,
@@ -100,7 +100,7 @@ export default function NormalWordle() {
       <GameStats
         guessCount={guesses.length}
         targetWord={targetWord}
-        showDebugTarget={true}
+        showDebugTarget={DEBUG}
       />
     </div>
   );

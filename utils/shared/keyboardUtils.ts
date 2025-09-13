@@ -1,4 +1,4 @@
-import { WORD_LENGTH } from "@/constants";
+import { WORD_LENGTH } from "@/gameConfigs";
 import { KeyboardHandlerProps } from "@/types";
 
 export const createKeyboardHandler = ({

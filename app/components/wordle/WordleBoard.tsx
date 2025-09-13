@@ -1,7 +1,7 @@
 "use client";
 import { checkGuess } from "@/utils/wordleUtils";
 import { LetterResult, WordleBoardProps } from "@/types";
-import { MAX_GUESSES, WORD_LENGTH } from "@/constants";
+import { MAX_GUESSES, WORD_LENGTH } from "@/gameConfigs";
 import "./WordleBoard.css";
 
 // size = "normal" for single board, "mini" for 2 board / multiplayer

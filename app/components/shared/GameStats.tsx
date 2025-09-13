@@ -1,5 +1,5 @@
 import React from "react";
-import { MAX_GUESSES } from "@/constants";
+import { MAX_GUESSES, DEBUG } from "@/gameConfigs";
 import { GameStatsProps } from "@/types";
 import "./GameStats.css";
 
@@ -7,7 +7,7 @@ export default function GameStats({
   guessCount,
   mode,
   targetWord,
-  showDebugTarget = false,
+  showDebugTarget = DEBUG,
   customStats = [],
 }: GameStatsProps) {
   return (

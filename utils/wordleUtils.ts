@@ -1,4 +1,5 @@
-import { WORDS, MAX_GUESSES, WORD_LENGTH, LETTER_STATUS } from "@/constants";
+import { LETTER_STATUS } from "@/constants";
+import { WORDS, MAX_GUESSES, WORD_LENGTH } from "@/gameConfigs";
 import { LetterResult } from "@/types";
 
 /**
@@ -85,6 +86,34 @@ export function findAbsurdleCandidates(guess: string, candidates: string[]): str
     // Return only the first word (best according to hierarchy)
     return [wordsWithScores[0].word];
 }
+
+/**
+ * Validate if a string is a valid 5-letter word
+ */
+export function isValidWord(word: string): boolean {
+    return word.length === WORD_LENGTH && /^[A-Z]{5}$/.test(word);
+}
+
+/**
+* Calculate score based on correct (2x) and present (1x) letters
+*/
+export function calculateScore(guesses: string[], target: string): number {
+    let totalScore = 0;
+
+    for (const guess of guesses) {
+        const result = checkGuess(guess, target);
+        for (const letterResult of result) {
+            if (letterResult.status === "correct") {
+                totalScore += 2;
+            } else if (letterResult.status === "present") {
+                totalScore += 1;
+            }
+        }
+    }
+
+    return totalScore;
+}
+
 
 export class SmartBot {
     private correctLetters: { [pos: number]: string } = {};
@@ -231,31 +260,4 @@ export class SmartBot {
             )
         };
     }
-}
-
-/**
- * Validate if a string is a valid 5-letter word
- */
-export function isValidWord(word: string): boolean {
-    return word.length === WORD_LENGTH && /^[A-Z]{5}$/.test(word);
-}
-
-/**
-* Calculate score based on correct (2x) and present (1x) letters
-*/
-export function calculateScore(guesses: string[], target: string): number {
-    let totalScore = 0;
-
-    for (const guess of guesses) {
-        const result = checkGuess(guess, target);
-        for (const letterResult of result) {
-            if (letterResult.status === "correct") {
-                totalScore += 2;
-            } else if (letterResult.status === "present") {
-                totalScore += 1;
-            }
-        }
-    }
-
-    return totalScore;
 }

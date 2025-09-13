@@ -1,5 +1,5 @@
 import React from "react";
-import { WORD_LENGTH } from "@/constants";
+import { WORD_LENGTH } from "@/gameConfigs";
 import { GuessInputProps } from "@/types";
 import "./GuessInput.css";
 
@@ -13,17 +13,11 @@ export default function GuessInput({
   submitButtonText = "Submit Guess",
   placeholder = "Enter your guess...",
 }: GuessInputProps) {
-  const isSubmitDisabled = 
-    currentGuess.length !== WORD_LENGTH || 
-    gameOver || 
-    loading || 
-    disabled;
+  const isSubmitDisabled =
+    currentGuess.length !== WORD_LENGTH || gameOver || loading || disabled;
 
-  const isSubmitActive = 
-    currentGuess.length === WORD_LENGTH && 
-    !gameOver && 
-    !loading && 
-    !disabled;
+  const isSubmitActive =
+    currentGuess.length === WORD_LENGTH && !gameOver && !loading && !disabled;
 
   return (
     <div className="input-section mb-6">

@@ -16,7 +16,7 @@ import {
   WORD_SELECTION_TIME,
   ROUND_END_COUNTDOWN,
   MAX_GUESSES,
-} from "@/constants";
+} from "@/gameConfigs";
 import { PlayerState, GameScore, GamePhase, WordSelectionMode } from "@/types";
 import "./multiplayer.css";
 

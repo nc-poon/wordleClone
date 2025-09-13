@@ -16,7 +16,7 @@ import {
   createKeyboardHandler,
   createInputChangeHandler,
 } from "@/utils/shared/keyboardUtils";
-import { WORDS, WORD_LENGTH } from "@/constants";
+import { WORDS, WORD_LENGTH, DEBUG } from "@/gameConfigs";
 
 export default function Absurdle() {
   const [targetWord, setTargetWord] = useState<string>("");
@@ -138,7 +138,7 @@ export default function Absurdle() {
         targetWord={
           candidates.length === 1 ? targetWord : candidates.join(", ")
         }
-        showDebugTarget={true}
+        showDebugTarget={DEBUG}
         customStats={[
           {
             label: "Candidates",

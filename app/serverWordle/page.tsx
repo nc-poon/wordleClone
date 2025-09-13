@@ -6,7 +6,7 @@ import GameStats from "@/app/components/shared/GameStats";
 import GameOverModal from "@/app/components/shared/GameOverModal";
 import LoadingSpinner from "@/app/components/shared/LoadingSpinner";
 import GuessInput from "@/app/components/shared/GuessInput";
-import { WORD_LENGTH } from "@/constants";
+import { WORD_LENGTH } from "@/gameConfigs";
 import { LetterResult, GameSession } from "@/types";
 import {
   createKeyboardHandler,
