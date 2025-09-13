@@ -1,17 +1,7 @@
 import React from "react";
-import { WORD_LENGTH } from "../../../utils/wordleUtils";
+import { WORD_LENGTH } from "@/constants";
+import { GuessInputProps } from "@/types";
 import "./GuessInput.css";
-
-export interface GuessInputProps {
-  currentGuess: string;
-  onInputChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
-  onSubmit: () => void;
-  gameOver: boolean;
-  loading: boolean;
-  disabled?: boolean;
-  submitButtonText?: string;
-  placeholder?: string;
-}
 
 export default function GuessInput({
   currentGuess,

@@ -88,3 +88,41 @@ body {
 .bg-muted {
   background-color: #f8fafc;
 }
+
+/* ===== MAIN GAME CONTAINER ===== */
+.game-container {
+  margin: 0 auto;
+  padding: 2rem;
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0.05));
+  box-shadow: 
+    0 20px 40px rgba(0, 0, 0, 0.1),
+    0 0 0 1px rgba(255, 255, 255, 0.1);
+  position: relative;
+  overflow: hidden;
+} 
+.game-container::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+}
+.game-container:focus {
+  outline: none;
+  box-shadow: 
+      0 20px 40px rgba(0, 0, 0, 0.15),
+      0 0 0 2px rgba(59, 130, 246, 0.3);
+}
+
+
+@media (max-width: 640px) {
+.game-container {
+  padding: 1.5rem 1rem;
+  margin: 1rem;
+}
+}
+
+
+

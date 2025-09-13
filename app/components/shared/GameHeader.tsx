@@ -1,10 +1,6 @@
 import React from "react";
+import { GameHeaderProps } from "@/types";
 import "./GameHeader.css";
-export interface GameHeaderProps {
-  title: string;
-  subtitle: string;
-  gameId?: string;
-}
 
 export default function GameHeader({
   title,

@@ -1,8 +1,6 @@
 import React from "react";
+import { LoadingSpinnerProps } from "@/types";
 import "./LoadingSpinner.css";
-export interface LoadingSpinnerProps {
-  message?: string;
-}
 
 export default function LoadingSpinner({
   message = "Loading game...",

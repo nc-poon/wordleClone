@@ -1,21 +1,8 @@
 "use client";
-import {
-  LetterResult,
-  checkGuess,
-  MAX_GUESSES,
-  WORD_LENGTH,
-} from "../../../utils/wordleUtils";
+import { checkGuess } from "@/utils/wordleUtils";
+import { LetterResult, WordleBoardProps } from "@/types";
+import { MAX_GUESSES, WORD_LENGTH } from "@/constants";
 import "./WordleBoard.css";
-
-interface WordleBoardProps {
-  guesses: string[];
-  currentGuess?: string;
-  targetWord?: string;
-  size?: "normal" | "mini";
-  showCurrentGuess?: boolean;
-  className?: string;
-  results?: LetterResult[][];
-}
 
 // size = "normal" for single board, "mini" for 2 board / multiplayer
 export default function WordleBoard({

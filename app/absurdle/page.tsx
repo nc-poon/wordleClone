@@ -1,24 +1,22 @@
 "use client";
 import { useState, useEffect } from "react";
-import WordleBoard from "../components/wordle/WordleBoard";
-import GameHeader from "../components/shared/GameHeader";
-import GameStats from "../components/shared/GameStats";
-import GameOverModal from "../components/shared/GameOverModal";
-import LoadingSpinner from "../components/shared/LoadingSpinner";
-import GuessInput from "../components/shared/GuessInput";
+import WordleBoard from "@/app/components/wordle/WordleBoard";
+import GameHeader from "@/app/components/shared/GameHeader";
+import GameStats from "@/app/components/shared/GameStats";
+import GameOverModal from "@/app/components/shared/GameOverModal";
+import LoadingSpinner from "@/app/components/shared/LoadingSpinner";
+import GuessInput from "@/app/components/shared/GuessInput";
 import {
   getRandomWord,
   isGameOver,
   hasWon,
   findAbsurdleCandidates,
-  WORDS,
-  WORD_LENGTH,
-} from "../../utils/wordleUtils";
+} from "@/utils/wordleUtils";
 import {
   createKeyboardHandler,
   createInputChangeHandler,
-} from "../../utils/shared/keyboardUtils";
-import ".././wordle.css";
+} from "@/utils/shared/keyboardUtils";
+import { WORDS, WORD_LENGTH } from "@/constants";
 
 export default function Absurdle() {
   const [targetWord, setTargetWord] = useState<string>("");
@@ -105,8 +103,6 @@ export default function Absurdle() {
         title="Absurdle (Host Cheating)"
         subtitle="The word changes to avoid your guesses! Can you beat the cheating host?"
       />
-
-      {/* Game Board */}
       <div className="mb-6">
         <WordleBoard
           guesses={guesses}
@@ -115,7 +111,6 @@ export default function Absurdle() {
           showCurrentGuess={true}
         />
       </div>
-
       <GuessInput
         currentGuess={currentGuess}
         onInputChange={handleInputChange}
@@ -124,7 +119,6 @@ export default function Absurdle() {
         loading={loading}
         submitButtonText="Submit Guess"
       />
-
       <GameOverModal
         gameOver={gameOver}
         won={won}
@@ -139,7 +133,6 @@ export default function Absurdle() {
         customDefeatTitle="Host Wins!"
         customDefeatMessage={`The cheating host got you! The final word was: ${targetWord}`}
       />
-
       <GameStats
         guessCount={guesses.length}
         targetWord={

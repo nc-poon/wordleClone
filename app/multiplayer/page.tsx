@@ -1,39 +1,24 @@
 "use client";
 import { useState, useEffect, useRef, useCallback } from "react";
-import WordleBoard from "../components/wordle/WordleBoard";
-import GameHeader from "../components/shared/GameHeader";
-import GuessInput from "../components/shared/GuessInput";
+import WordleBoard from "@/app/components/wordle/WordleBoard";
+import GameHeader from "@/app/components/shared/GameHeader";
+import GuessInput from "@/app/components/shared/GuessInput";
 import {
   SmartBot,
   calculateScore,
   checkGuess,
   getRandomWord,
   isValidWord,
-  MAX_GUESSES,
+} from "@/utils/wordleUtils";
+import { createKeyboardHandler } from "@/utils/shared/keyboardUtils";
+import {
   WORD_LENGTH,
-} from "../../utils/wordleUtils";
-import { createKeyboardHandler } from "../../utils/shared/keyboardUtils";
+  WORD_SELECTION_TIME,
+  ROUND_END_COUNTDOWN,
+  MAX_GUESSES,
+} from "@/constants";
+import { PlayerState, GameScore, GamePhase, WordSelectionMode } from "@/types";
 import "./multiplayer.css";
-
-interface PlayerState {
-  guesses: string[];
-  currentGuess: string;
-  gameOver: boolean;
-  won: boolean;
-  targetWord: string;
-  score: number;
-}
-interface GameScore {
-  player: number;
-  bot: number;
-  rounds: number;
-}
-
-type GamePhase = "setup" | "wordSelection" | "playing" | "roundEnd";
-type WordSelectionMode = "custom" | "auto";
-
-const WORD_SELECTION_TIME = 10; // 10 seconds for user to select word
-const ROUND_END_COUNTDOWN = 8; // 8 seconds between rounds
 
 export default function MultiplayerWordle() {
   const [gamePhase, setGamePhase] = useState<GamePhase>("setup");
@@ -571,7 +556,6 @@ export default function MultiplayerWordle() {
           gameScore.rounds + 1
         }`}
       />
-
       {/* Setup Phase */}
       {gamePhase === "setup" && (
         <div className="setup-phase card p-6 max-w-md mx-auto">
@@ -622,7 +606,6 @@ export default function MultiplayerWordle() {
           </div>
         </div>
       )}
-
       {/* Word Selection Phase */}
       {gamePhase === "wordSelection" && (
         <div className="word-selection-phase card p-6 max-w-md mx-auto">
@@ -664,7 +647,6 @@ export default function MultiplayerWordle() {
           </button>
         </div>
       )}
-
       {/* Playing Phase */}
       {gamePhase === "playing" && (
         <div className="playing-phase">
@@ -694,7 +676,6 @@ export default function MultiplayerWordle() {
           )}
         </div>
       )}
-
       {/* Round End Phase */}
       {gamePhase === "roundEnd" && (
         <div className="round-end-phase card p-6 max-w-md mx-auto text-center">

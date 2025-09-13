@@ -1,28 +1,11 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { promises as fs } from 'fs';
 import path from 'path';
+import { WORDS } from '@/constants';
+import { LetterResult, GameSession } from '@/types';
 
-
-interface GameSession {
-  gameId: string;
-  targetWord: string;
-  guesses: string[];
-  gameOver: boolean;
-  won: boolean;
-  createdAt: string;
-  lastUpdated: string;
-}
-
-interface LetterResult {
-  letter: string;
-  status: "correct" | "present" | "absent";
-}
 
 const GAMES_FILE = path.join(process.cwd(), 'data', 'games.json');
-const WORDS = [
-  "HELLO", "WORLD", "QUITE", "FANCY", "FRESH", "PANIC", "CRAZY", "BUGGY"
-];
-
 
 // Read games data from JSON file
 async function readGames(): Promise<{ games: GameSession[] }> {

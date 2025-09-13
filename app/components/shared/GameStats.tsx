@@ -1,18 +1,7 @@
 import React from "react";
-import { MAX_GUESSES } from "../../../utils/wordleUtils";
+import { MAX_GUESSES } from "@/constants";
+import { GameStatsProps } from "@/types";
 import "./GameStats.css";
-export interface CustomStat {
-  label: string;
-  value: string;
-}
-
-export interface GameStatsProps {
-  guessCount: number;
-  mode?: string;
-  targetWord?: string;
-  showDebugTarget?: boolean;
-  customStats?: CustomStat[];
-}
 
 export default function GameStats({
   guessCount,

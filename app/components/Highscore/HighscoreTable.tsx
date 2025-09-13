@@ -1,11 +1,6 @@
 "use client";
 import { useState, useEffect } from "react";
-
-interface GameScore {
-  player: number;
-  bot: number;
-  rounds: number;
-}
+import { GameScore } from "@/types";
 
 export default function HighscoreTable() {
   const [gameScore, setGameScore] = useState<GameScore>({

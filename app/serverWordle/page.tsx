@@ -1,25 +1,17 @@
 "use client";
 import { useState, useEffect } from "react";
-import WordleBoard from "../components/wordle/WordleBoard";
-import GameHeader from "../components/shared/GameHeader";
-import GameStats from "../components/shared/GameStats";
-import GameOverModal from "../components/shared/GameOverModal";
-import LoadingSpinner from "../components/shared/LoadingSpinner";
-import GuessInput from "../components/shared/GuessInput";
-import { LetterResult, WORD_LENGTH } from "../../utils/wordleUtils";
+import WordleBoard from "@/app/components/wordle/WordleBoard";
+import GameHeader from "@/app/components/shared/GameHeader";
+import GameStats from "@/app/components/shared/GameStats";
+import GameOverModal from "@/app/components/shared/GameOverModal";
+import LoadingSpinner from "@/app/components/shared/LoadingSpinner";
+import GuessInput from "@/app/components/shared/GuessInput";
+import { WORD_LENGTH } from "@/constants";
+import { LetterResult, GameSession } from "@/types";
 import {
   createKeyboardHandler,
   createInputChangeHandler,
-} from "../../utils/shared/keyboardUtils";
-import ".././wordle.css";
-
-interface GameSession {
-  gameId: string;
-  targetWord: string;
-  guesses: string[];
-  gameOver: boolean;
-  won: boolean;
-}
+} from "@/utils/shared/keyboardUtils";
 
 export default function ServerWordle() {
   const [gameId, setGameId] = useState<string>("");
@@ -142,8 +134,6 @@ export default function ServerWordle() {
         subtitle="All validation happens on the server."
         gameId={gameId}
       />
-
-      {/* Game Board */}
       <div className="mb-6">
         <WordleBoard
           guesses={guesses}
@@ -152,7 +142,6 @@ export default function ServerWordle() {
           results={allResults}
         />
       </div>
-
       <GuessInput
         currentGuess={currentGuess}
         onInputChange={handleInputChange}
@@ -162,7 +151,6 @@ export default function ServerWordle() {
         disabled={!gameId}
         submitButtonText="Submit to Server"
       />
-
       <GameOverModal
         gameOver={gameOver}
         won={won}
@@ -171,7 +159,6 @@ export default function ServerWordle() {
         onPlayAgain={initializeGame}
         playAgainText="🔄 New Game Session"
       />
-
       <GameStats guessCount={guesses.length} mode="Server" />
     </div>
   );

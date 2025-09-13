@@ -1,22 +1,17 @@
 "use client";
 import { useState, useEffect } from "react";
-import WordleBoard from "../components/wordle/WordleBoard";
-import GameHeader from "../components/shared/GameHeader";
-import GameStats from "../components/shared/GameStats";
-import GameOverModal from "../components/shared/GameOverModal";
-import LoadingSpinner from "../components/shared/LoadingSpinner";
-import GuessInput from "../components/shared/GuessInput";
-import {
-  getRandomWord,
-  isGameOver,
-  hasWon,
-  WORD_LENGTH,
-} from "../../utils/wordleUtils";
+import WordleBoard from "@/app/components/wordle/WordleBoard";
+import GameHeader from "@/app/components/shared/GameHeader";
+import GameStats from "@/app/components/shared/GameStats";
+import GameOverModal from "@/app/components/shared/GameOverModal";
+import LoadingSpinner from "@/app/components/shared/LoadingSpinner";
+import GuessInput from "@/app/components/shared/GuessInput";
+import { getRandomWord, isGameOver, hasWon } from "@/utils/wordleUtils";
+import { WORD_LENGTH } from "@/constants";
 import {
   createKeyboardHandler,
   createInputChangeHandler,
-} from "../../utils/shared/keyboardUtils";
-import ".././wordle.css";
+} from "@/utils/shared/keyboardUtils";
 
 export default function NormalWordle() {
   const [targetWord, setTargetWord] = useState<string>("");
@@ -78,8 +73,6 @@ export default function NormalWordle() {
   return (
     <div className="game-container" onKeyDown={handleKeyPress} tabIndex={0}>
       <GameHeader title="Normal Wordle" subtitle="Classic wordle" />
-
-      {/* Game Board */}
       <div className="mb-6">
         <WordleBoard
           guesses={guesses}
@@ -88,7 +81,6 @@ export default function NormalWordle() {
           showCurrentGuess={true}
         />
       </div>
-
       <GuessInput
         currentGuess={currentGuess}
         onInputChange={handleInputChange}
@@ -97,7 +89,6 @@ export default function NormalWordle() {
         loading={loading}
         submitButtonText="Submit Guess"
       />
-
       <GameOverModal
         gameOver={gameOver}
         won={won}
@@ -106,7 +97,6 @@ export default function NormalWordle() {
         onPlayAgain={initializeGame}
         playAgainText="🔄 Play Again"
       />
-
       <GameStats
         guessCount={guesses.length}
         targetWord={targetWord}

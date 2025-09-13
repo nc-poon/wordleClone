@@ -1,20 +1,6 @@
 import React from "react";
+import { GameOverModalProps } from "@/types";
 import "./GameOverModal.css";
-export interface GameOverModalProps {
-  gameOver: boolean;
-  won: boolean;
-  guessCount: number;
-  targetWord?: string;
-  gameId?: string;
-  onPlayAgain: () => void;
-  playAgainText?: string;
-  customVictoryIcon?: string;
-  customVictoryTitle?: string;
-  customVictoryMessage?: string;
-  customDefeatIcon?: string;
-  customDefeatTitle?: string;
-  customDefeatMessage?: string;
-}
 
 export default function GameOverModal({
   gameOver,

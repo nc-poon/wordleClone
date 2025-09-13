@@ -1,14 +1,5 @@
-export interface LetterResult {
-    letter: string;
-    status: "correct" | "present" | "absent";
-}
-
-export const WORDS = [
-    "HELLO", "WORLD", "QUITE", "FANCY", "FRESH", "PANIC", "CRAZY", "BUGGY"
-];
-export const MAX_GUESSES = 6;
-export const WORD_LENGTH = 5;
-
+import { WORDS, MAX_GUESSES, WORD_LENGTH, LETTER_STATUS } from "@/constants";
+import { LetterResult } from "@/types";
 
 /**
  * Check a guess against the target word
@@ -27,12 +18,12 @@ export function checkGuess(guess: string, target: string): LetterResult[] {
     for (let i = 0; i < guessLetters.length; i++) {
         // same value same pos
         if (guessLetters[i] === targetLetters[i]) {
-            result.push({ letter: guessLetters[i], status: "correct" });
+            result.push({ letter: guessLetters[i], status: LETTER_STATUS.CORRECT });
             // same value dif pos
         } else if (targetLetters.includes(guessLetters[i])) {
-            result.push({ letter: guessLetters[i], status: "present" });
+            result.push({ letter: guessLetters[i], status: LETTER_STATUS.PRESENT });
         } else {
-            result.push({ letter: guessLetters[i], status: "absent" });
+            result.push({ letter: guessLetters[i], status: LETTER_STATUS.ABSENT });
         }
     }
     return result;

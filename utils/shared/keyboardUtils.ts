@@ -1,12 +1,5 @@
-import { WORD_LENGTH } from "../wordleUtils";
-
-export interface KeyboardHandlerProps {
-  currentGuess: string;
-  setCurrentGuess: (value: string | ((prev: string) => string)) => void;
-  gameOver: boolean;
-  loading: boolean;
-  onEnter: () => void;
-}
+import { WORD_LENGTH } from "@/constants";
+import { KeyboardHandlerProps } from "@/types";
 
 export const createKeyboardHandler = ({
   currentGuess,
