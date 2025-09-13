@@ -31,14 +31,14 @@ The application will be available at `http://localhost:3000` (or `http://localho
 
 ## 🎮 Game Modes
 
-### Debugging is enable by default, disable it be setting debug = false in gameConfig.ts, it will hide the target words during the game
+### Debugging is enabled by default, disable it by setting DEBUG = false in gameConfigs.ts, it will hide the target words during the game
 
 ### 1. Classic Mode (Task 1)
 
 **Traditional 5-letter word guessing**
 
-- Guess a 5-letter word in 6 attempts or change it in constants.ts, max round could be 99999... (it will take some time to render... or discard the first halve and move the rest of the guesses up to limit the number of rows rendered)
-- Color-coded feedback for each guess, similar to original wordle , more intuitive than '0', '?', '\_' but less accessible (color blind etc... could add secondary visual that is not color)
+- Guess a 5-letter word in 6 attempts or change it in gameConfigs.ts, max rounds could be 99999... (it will take some time to render... or discard the first half and move the rest of the guesses up to limit the number of rows rendered)
+- Color-coded feedback for each guess, similar to original Wordle, more intuitive than '0', '?', '\_' but less accessible (color blind etc... could add secondary visual that is not color)
 
 ### 2. Server/Client Mode (Task 2)
 
@@ -53,16 +53,16 @@ The application will be available at `http://localhost:3000` (or `http://localho
 **Dynamic difficulty adjustment**
 
 - The word changes strategically to avoid your guesses
-- Keeps a list of candidates that do not match, if match , prioritize less hit
+- Keeps a list of candidates that do not match, if match, prioritize less hit
 
 ### 4. Multiplayer Mode (Task 4)
 
 **Compete against SmartBot**
 
 - Side-by-side dual board gameplay
-- Player can choose their own words for their opponents or randomly choosen. (Might need to validate the words as user can enter any 5 letter strings, giving user option to choose their own word can personalised the game)
+- Player can choose their own words for their opponents or randomly chosen. (Might need to validate the words as user can enter any 5 letter strings, giving user option to choose their own word can personalize the game)
 - When choosing the word, there is a time limit to reduce the amount of waiting time for the opponent.
-- Bot opponent, Assume multiplayer over a network instead on the same device. Bot to simulate another player.
+- Bot opponent, assume multiplayer over a network instead of on the same device. Bot to simulate another player.
 - Score tracking with localStorage
 
 ## 🤖 Bot Behavior
@@ -78,7 +78,7 @@ The application will be available at `http://localhost:3000` (or `http://localho
 
 **File-Based JSON Storage**
 
-- Use json for prototyping (fast and easy, good for small scale and fast development). RDB (psql) as main db and redis for caching things like sessions, user profile, high scores etc..
+- Use JSON for prototyping (fast and easy, good for small scale and fast development). RDB (PostgreSQL) as main db and Redis for caching things like sessions, user profile, high scores etc.
 
 ```json
 // Game Sessions (server mode)
@@ -98,61 +98,60 @@ The application will be available at `http://localhost:3000` (or `http://localho
   "rounds": 8
 }
 
-### FrontEnd
+### Frontend
 
 - Responsive Design, set breakpoints for different devices.
-- Use tailwind for general styling, seperate css file for more complex styling/animations
+- Use Tailwind for general styling, separate CSS file for more complex styling/animations
 
 
 ## 🏗️ Repository Structure
 
 ```
-
 wordle_clone/
-├── app/
-│ ├── components/
-│ │ ├── shared/ # Shared UI components
-│ │ │ ├── GameHeader.tsx # Game title and subtitle
-│ │ │ ├── GameStats.tsx # Score and statistics
-│ │ │ ├── GameOverModal.tsx # Win/lose modal
-│ │ │ ├── LoadingSpinner.tsx # Loading state
-│ │ │ ├── GuessInput.tsx # Input field for guesses
-│ │ │ └── \*.css
-│ │ ├── wordle/ # Game-specific components
-│ │ │ ├── WordleBoard.tsx # Main game board with grid
-│ │ │ └── WordleBoard.css
-│ │ └── Highscore/ # Score tracking components
-│ │ └── HighscoreTable.tsx
-│ ├── normalWordle/ # Classic game mode
-│ │ └── page.tsx
-│ ├── serverWordle/ # Server-validated mode
-│ │ └── page.tsx
-│ ├── absurdle/ # Host Cheating mode
-│ │ └── page.tsx
-│ ├── multiplayer/ # Multiplayer
-│ │ ├── page.tsx
-│ │ └── multiplayer.css
-│ ├── wordle_api/ # API Routes
-│ │ └── game/
-│ │ └── route.ts # endpoints for server mode
-│ ├── globals.css # Global styles
-│ ├── layout.tsx # Root layout
-│ └── page.tsx # Home page
-├── utils/
-│ ├── wordleUtils.ts # Game logic and SmartBot class
-│ └── shared/
-│ └── keyboardUtils.ts # Keyboard handling utilities
-├── constants.ts # Game constants
-├── types.ts # TypeScript types
-├── data/ # Data storage
-│ └── games.json # Game sessions storage
-├── public/
-├── README.md
-├── package.json
-├── tsconfig.json
-├── tailwind.config.ts
-└── next.config.mjs
-
+├── app/                          # Next.js App Router
+│   ├── components/               # Reusable components
+│   │   ├── shared/               # Shared UI components
+│   │   │   ├── GameHeader.tsx    # Game title and subtitle
+│   │   │   ├── GameStats.tsx     # Score and statistics display
+│   │   │   ├── GameOverModal.tsx # Win/lose modal with customization
+│   │   │   ├── LoadingSpinner.tsx # Loading state component
+│   │   │   ├── GuessInput.tsx    # Input field for guesses
+│   │   │   └── *.css             # Component-specific styles
+│   │   ├── wordle/               # Game-specific components
+│   │   │   ├── WordleBoard.tsx   # Main game board with grid
+│   │   │   └── WordleBoard.css   # Board styling
+│   │   └── Highscore/            # Score tracking components
+│   │       └── HighscoreTable.tsx # Multiplayer score display
+│   ├── normalWordle/             # Classic game mode
+│   │   └── page.tsx
+│   ├── serverWordle/             # Server-validated mode
+│   │   └── page.tsx
+│   ├── absurdle/                 # Adaptive difficulty mode
+│   │   └── page.tsx
+│   ├── multiplayer/              # Two-player mode vs bot
+│   │   ├── page.tsx
+│   │   └── multiplayer.css       # Mode-specific styling
+│   ├── wordle_api/               # API Routes
+│   │   └── game/                 # Game session management
+│   │       └── route.ts          # REST endpoints for server mode
+│   ├── globals.css               # Global styles
+│   ├── wordle.css                # Shared game styling
+│   ├── layout.tsx                # Root layout
+│   └── page.tsx                  # Home page
+├── utils/                        # Utility functions
+│   ├── wordleUtils.ts            # Game logic and SmartBot class
+│   └── shared/                   # Shared utility functions
+│       └── keyboardUtils.ts      # Keyboard handling utilities
+├── gameConfigs.ts                # Centralized game constants
+├── types.ts                      # Centralized TypeScript types
+├── data/                         # Data storage
+│   └── games.json                # Game sessions storage
+├── public/                       # Static assets
+├── README.md                     # This file
+├── package.json                  # Dependencies and scripts
+├── tsconfig.json                 # TypeScript config with @ path alias
+├── tailwind.config.ts            # Tailwind configuration
+└── next.config.mjs               # Next.js configuration
 ```
 
 ## 📝 License
