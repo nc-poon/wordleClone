@@ -1,3 +1,5 @@
+import HighscoreTable from "./components/Highscore/HighscoreTable";
+
 export default function Home() {
   return (
     <div className="min-h-screen bg-muted py-12">
@@ -5,6 +7,7 @@ export default function Home() {
         <div className="text-center mb-12">
           <h1 className="text-5xl font-bold text-slate-800 mb-4">Assignment</h1>
         </div>
+        <HighscoreTable />
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-4xl mx-auto">
           <a
             href="/normalWordle"
