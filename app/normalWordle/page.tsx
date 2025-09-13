@@ -8,7 +8,7 @@ import {
   MAX_GUESSES,
   WORD_LENGTH,
 } from "../../utils/wordleUtils";
-import "./normalWordle.css";
+import ".././wordle.css";
 
 export default function NormalWordle() {
   const [targetWord, setTargetWord] = useState<string>("");
