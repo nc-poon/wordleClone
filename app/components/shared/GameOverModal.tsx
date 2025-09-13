@@ -8,6 +8,12 @@ export interface GameOverModalProps {
   gameId?: string;
   onPlayAgain: () => void;
   playAgainText?: string;
+  customVictoryIcon?: string;
+  customVictoryTitle?: string;
+  customVictoryMessage?: string;
+  customDefeatIcon?: string;
+  customDefeatTitle?: string;
+  customDefeatMessage?: string;
 }
 
 export default function GameOverModal({
@@ -18,6 +24,12 @@ export default function GameOverModal({
   gameId,
   onPlayAgain,
   playAgainText = "🔄 Play Again",
+  customVictoryIcon,
+  customVictoryTitle,
+  customVictoryMessage,
+  customDefeatIcon,
+  customDefeatTitle,
+  customDefeatMessage,
 }: GameOverModalProps) {
   if (!gameOver) return null;
 
@@ -25,10 +37,14 @@ export default function GameOverModal({
     if (won) {
       return (
         <div className="victory-content">
-          <div className="victory-icon animate-bounce">🎉</div>
-          <h3 className="victory-title">Congratulations!</h3>
+          <div className="victory-icon animate-bounce">
+            {customVictoryIcon || "🎉"}
+          </div>
+          <h3 className="victory-title">
+            {customVictoryTitle || "Congratulations!"}
+          </h3>
           <p className="victory-text">
-            {targetWord ? (
+            {customVictoryMessage || (targetWord ? (
               <>
                 You guessed "
                 <span className="word-highlight">{targetWord}</span>" in{" "}
@@ -41,7 +57,7 @@ export default function GameOverModal({
                 <span className="attempts-highlight">{guessCount}</span>{" "}
                 attempts!
               </>
-            )}
+            ))}
           </p>
           {gameId && (
             <p className="text-sm text-slate-500 mt-2">
@@ -54,15 +70,21 @@ export default function GameOverModal({
     } else {
       return (
         <div className="gameover-content">
-          <div className="gameover-icon">💭</div>
-          <h3 className="gameover-title">Game Over</h3>
-          {targetWord ? (
-            <p className="gameover-text">
-              The word was: <span className="word-highlight">{targetWord}</span>
-            </p>
-          ) : (
-            <p className="gameover-text">Hmmmm........</p>
-          )}
+          <div className="gameover-icon">
+            {customDefeatIcon || "💭"}
+          </div>
+          <h3 className="gameover-title">
+            {customDefeatTitle || "Game Over"}
+          </h3>
+          <p className="gameover-text">
+            {customDefeatMessage || (targetWord ? (
+              <>
+                The word was: <span className="word-highlight">{targetWord}</span>
+              </>
+            ) : (
+              "Hmmmm........"
+            ))}
+          </p>
           {gameId && (
             <p className="text-sm text-slate-500 mt-2">
               Game ID:{" "}
