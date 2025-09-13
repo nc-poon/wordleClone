@@ -97,12 +97,12 @@ The application will be available at `http://localhost:3000` (or `http://localho
   "bot": 3,
   "rounds": 8
 }
+```
 
 ### Frontend
 
 - Responsive Design, set breakpoints for different devices.
 - Use Tailwind for general styling, separate CSS file for more complex styling/animations
-
 
 ## 🏗️ Repository Structure
 
@@ -169,4 +169,7 @@ This project is an educational implementation of word-guessing game mechanics. I
 All game mechanics implemented here are based on common word puzzle concepts that are not subject to copyright protection. The specific implementation, code, and design are original works licensed under the MIT License.
 
 **Built using Next.js 15, TypeScript, and Tailwind CSS**
+
+```
+
 ```
