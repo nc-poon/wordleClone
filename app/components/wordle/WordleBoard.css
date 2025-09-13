@@ -118,3 +118,8 @@
       font-size: 1.1rem;
   }
 }  
+@media (max-width: 480px) {
+  .guess-row {
+      gap: 6px;
+  }
+  }
