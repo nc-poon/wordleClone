@@ -75,6 +75,68 @@ export default function Home() {
             </div>
           </a>
         </div>
+        <div className="max-w-4xl mt-2 mx-auto mb-8">
+          <div className="card">
+            <div className="card-content">
+              <h2 className="text-2xl font-bold text-slate-800 mb-6 text-center">
+                Game Rules
+              </h2>
+
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+                <div>
+                  <h3 className="text-lg font-semibold text-slate-700 mb-3">
+                    Wordle
+                  </h3>
+                  <ul className="space-y-2 text-slate-600">
+                    <li>• Guess a 5-letter word in 6 attempts</li>
+                    <li>• Each guess must be a valid word</li>
+                    <li>
+                      • After each guess, letters change color to show how close
+                      you are
+                    </li>
+                  </ul>
+                </div>
+
+                <div>
+                  <h3 className="text-lg font-semibold text-slate-700 mb-3">
+                    Absurdle
+                  </h3>
+                  <ul className="space-y-2 text-slate-600">
+                    <li>• Same rules as Wordle, but the word changes!</li>
+                    <li>• The game tries to avoid giving you the answer</li>
+                    <li>• Forces you to narrow down possibilities</li>
+                  </ul>
+                </div>
+              </div>
+
+              <div className="mt-6 pt-6 border-t border-slate-200">
+                <h3 className="text-lg font-semibold text-slate-700 mb-3">
+                  Color Guide
+                </h3>
+                <div className="flex flex-wrap gap-4 justify-center">
+                  <div className="flex items-center gap-2">
+                    <div className="w-4 h-4 bg-gray-500 rounded"></div>
+                    <span className="text-slate-600">
+                      Grey: Letter not in word
+                    </span>
+                  </div>
+                  <div className="flex items-center gap-2">
+                    <div className="w-4 h-4 bg-orange-500 rounded"></div>
+                    <span className="text-slate-600">
+                      Orange: Letter in word, wrong position
+                    </span>
+                  </div>
+                  <div className="flex items-center gap-2">
+                    <div className="w-4 h-4 bg-green-500 rounded"></div>
+                    <span className="text-slate-600">
+                      Green: Letter in word, correct position
+                    </span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   );
