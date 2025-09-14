@@ -5,9 +5,7 @@ export default function Home() {
     <div className="min-h-screen bg-muted py-12">
       <div className="container">
         <div className="text-center mb-12">
-          <h1 className="text-5xl font-bold text-slate-800 mb-4">
-            Client Validation Wordle
-          </h1>
+          <h1 className="text-5xl font-bold text-slate-800 mb-4">Wordle</h1>
         </div>
         <HighscoreTable />
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-4xl mx-auto">
@@ -18,7 +16,7 @@ export default function Home() {
             <div className="card-content">
               <div className="flex items-center justify-between mb-4">
                 <h2 className="text-xl font-semibold text-slate-800">
-                  Classic
+                  Client Validation Wordle
                 </h2>
                 <div className="w-3 h-3 bg-emerald-500 rounded-full"></div>
               </div>
