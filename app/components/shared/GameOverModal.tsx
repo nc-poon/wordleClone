@@ -32,8 +32,8 @@ export default function GameOverModal({
           <p className="victory-text">
             {customVictoryMessage || (targetWord ? (
               <>
-                You guessed "
-                <span className="word-highlight">{targetWord}</span>" in{" "}
+                You guessed &quot;
+                <span className="word-highlight">{targetWord}</span>&quot; in{" "}
                 <span className="attempts-highlight">{guessCount}</span>{" "}
                 attempts!
               </>

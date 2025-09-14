@@ -80,12 +80,12 @@ export default function HighscoreTable() {
         <div className="performance-indicator text-center">
           {gameScore.player > gameScore.bot ? (
             <div className="text-green-600 font-semibold">
-              🎉 You're winning!
+              🎉 You&apos;re winning!
             </div>
           ) : gameScore.bot > gameScore.player ? (
             <div className="text-red-600 font-semibold">🤖 Bot is ahead</div>
           ) : (
-            <div className="text-slate-600 font-semibold">🤝 It's a tie!</div>
+            <div className="text-slate-600 font-semibold">🤝 It&apos;s a tie!</div>
           )}
         </div>
       </div>

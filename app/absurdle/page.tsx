@@ -45,7 +45,7 @@ export default function Absurdle() {
     if (currentGuess.length !== WORD_LENGTH || gameOver || loading) return;
 
     // Find candidates that give least helpful feedback
-    let candidatesResult = findAbsurdleCandidates(currentGuess, candidates);
+    const candidatesResult = findAbsurdleCandidates(currentGuess, candidates);
     setCandidates(candidatesResult);
 
     let playerWon = false;

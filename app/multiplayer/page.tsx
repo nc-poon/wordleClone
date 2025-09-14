@@ -686,13 +686,13 @@ export default function MultiplayerWordle() {
               Your word: <strong>{playerState.targetWord}</strong>
             </div>
             <div className="mb-2">
-              Bot's word: <strong>{botState.targetWord}</strong>
+              Bot&apos;s word: <strong>{botState.targetWord}</strong>
             </div>
             <div className="mb-2">
               Your score: <strong>{playerState.score}</strong>
             </div>
             <div className="mb-4">
-              Bot's score: <strong>{botState.score}</strong>
+              Bot&apos;s score: <strong>{botState.score}</strong>
             </div>
 
             <div className="text-lg font-semibold">
