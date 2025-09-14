@@ -35,14 +35,14 @@ The application will be available at `http://localhost:3000/game` (or `http://lo
 
 ### Debugging is enabled by default, disable it by setting DEBUG = false in gameConfigs.ts, it will hide the target words during the game
 
-### 1. Classic Mode (Task 1)
+### 1. Classic Mode
 
 **Traditional 5-letter word guessing**
 
 - Guess a 5-letter word in 6 attempts or change it in gameConfigs.ts, max rounds could be 99999... (it will take some time to render... or discard the first half and move the rest of the guesses up to limit the number of rows rendered)
 - Color-coded feedback for each guess, similar to original Wordle, more intuitive than '0', '?', '\_' but less accessible (color blind etc... could add secondary visual that is not color)
 
-### 2. Server/Client Mode (Task 2)
+### 2. Server/Client Mode
 
 **Server-validated gameplay**
 
@@ -50,14 +50,14 @@ The application will be available at `http://localhost:3000/game` (or `http://lo
 - Client never knows the target word
 - Every guess is sent to the server and server returns the result
 
-### 3. Adaptive Mode (Task 3)
+### 3. Adaptive Mode
 
 **Dynamic difficulty adjustment**
 
 - The word changes strategically to avoid your guesses
 - Keeps a list of candidates that do not match, if match, prioritize less hit
 
-### 4. Multiplayer Mode (Task 4)
+### 4. Multiplayer Mode
 
 **Compete against SmartBot**
 

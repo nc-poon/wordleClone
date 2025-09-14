@@ -5,7 +5,9 @@ export default function Home() {
     <div className="min-h-screen bg-muted py-12">
       <div className="container">
         <div className="text-center mb-12">
-          <h1 className="text-5xl font-bold text-slate-800 mb-4">Assignment</h1>
+          <h1 className="text-5xl font-bold text-slate-800 mb-4">
+            Client Validation Wordle
+          </h1>
         </div>
         <HighscoreTable />
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-4xl mx-auto">
@@ -15,7 +17,9 @@ export default function Home() {
           >
             <div className="card-content">
               <div className="flex items-center justify-between mb-4">
-                <h2 className="text-xl font-semibold text-slate-800">Task 1</h2>
+                <h2 className="text-xl font-semibold text-slate-800">
+                  Classic
+                </h2>
                 <div className="w-3 h-3 bg-emerald-500 rounded-full"></div>
               </div>
               <h3 className="font-medium text-slate-700 mb-2">Normal Wordle</h3>
@@ -28,7 +32,9 @@ export default function Home() {
           >
             <div className="card-content">
               <div className="flex items-center justify-between mb-4">
-                <h2 className="text-xl font-semibold text-slate-800">Task 2</h2>
+                <h2 className="text-xl font-semibold text-slate-800">
+                  Server Validation Wordle
+                </h2>
                 <div className="w-3 h-3 bg-blue-500 rounded-full"></div>
               </div>
               <h3 className="font-medium text-slate-700 mb-2">
@@ -43,7 +49,9 @@ export default function Home() {
           >
             <div className="card-content">
               <div className="flex items-center justify-between mb-4">
-                <h2 className="text-xl font-semibold text-slate-800">Task 3</h2>
+                <h2 className="text-xl font-semibold text-slate-800">
+                  Absurdle
+                </h2>
                 <div className="w-3 h-3 bg-purple-500 rounded-full"></div>
               </div>
               <h3 className="font-medium text-slate-700 mb-2">
@@ -58,11 +66,13 @@ export default function Home() {
           >
             <div className="card-content">
               <div className="flex items-center justify-between mb-4">
-                <h2 className="text-xl font-semibold text-slate-800">Task 4</h2>
+                <h2 className="text-xl font-semibold text-slate-800">
+                  Multiplayer
+                </h2>
                 <div className="w-3 h-3 bg-red-500 rounded-full"></div>
               </div>
               <h3 className="font-medium text-slate-700 mb-2">
-                Two Player Wordle
+                Two Player Wordle (currently with bot)
               </h3>
             </div>
           </a>
