@@ -10,7 +10,7 @@ export default function Home() {
         <HighscoreTable />
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-4xl mx-auto">
           <a
-            href="/normalWordle"
+            href="/game/normalWordle"
             className="card cursor-pointer hover:scale-[1.02] active:scale-[0.98] no-underline"
           >
             <div className="card-content">
@@ -23,7 +23,7 @@ export default function Home() {
           </a>
 
           <a
-            href="/serverWordle"
+            href="/game/serverWordle"
             className="card cursor-pointer hover:scale-[1.02] active:scale-[0.98] no-underline"
           >
             <div className="card-content">
@@ -38,7 +38,7 @@ export default function Home() {
           </a>
 
           <a
-            href="/absurdle"
+            href="/game/absurdle"
             className="card cursor-pointer hover:scale-[1.02] active:scale-[0.98] no-underline"
           >
             <div className="card-content">
@@ -53,7 +53,7 @@ export default function Home() {
           </a>
 
           <a
-            href="/multiplayer"
+            href="/game/multiplayer"
             className="card cursor-pointer hover:scale-[1.02] active:scale-[0.98] no-underline"
           >
             <div className="card-content">

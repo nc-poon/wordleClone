@@ -27,7 +27,7 @@ npm run build
 npm start
 ```
 
-The application will be available at `http://localhost:3000` (or `http://localhost:3001` if port 3000 is in use).
+The application will be available at `http://localhost:3000/game` (or `http://localhost:3001/game` if port 3000 is in use).
 
 ## 🎮 Game Modes
 
