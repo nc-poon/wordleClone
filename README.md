@@ -62,7 +62,7 @@ The application will be available at `http://localhost:3000/game` (or `http://lo
 **Compete against SmartBot**
 
 - Side-by-side dual board gameplay
-- Player can choose their own words for their opponents or randomly chosen. (Might need to validate the words as user can enter any 5 letter strings, giving user option to choose their own word can personalize the game)
+- Player can choose their own words for their opponents or randomly chosen. (TODO: Might need to validate the word as user can enter any 5 letter strings, giving user option to choose their own word can personalize the game)
 - When choosing the word, there is a time limit to reduce the amount of waiting time for the opponent.
 - Bot opponent, assume multiplayer over a network instead of on the same device. Bot to simulate another player.
 - Score tracking with localStorage
@@ -80,7 +80,7 @@ The application will be available at `http://localhost:3000/game` (or `http://lo
 
 **File-Based JSON Storage**
 
-- Use JSON for prototyping (fast and easy, good for small scale and fast development). RDB (PostgreSQL) as main db and Redis for caching things like sessions, user profile, high scores etc.
+- Use JSON for prototyping (fast and easy, good for small scale and fast development). For future development, RDB (PostgreSQL) as main db and Redis for caching things like sessions, user profile, high scores etc.
 
 ```json
 // Game Sessions (server mode)
