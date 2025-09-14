@@ -110,8 +110,8 @@ The application will be available at `http://localhost:3000/game` (or `http://lo
 
 ```
 wordle_clone/
-├── app/                          # Next.js App Router
-│   ├── components/               # Reusable components
+├── app/
+│   ├── components/
 │   │   ├── shared/               # Shared UI components
 │   │   │   ├── GameHeader.tsx    # Game title and subtitle
 │   │   │   ├── GameStats.tsx     # Score and statistics display
@@ -128,7 +128,7 @@ wordle_clone/
 │   │   └── page.tsx
 │   ├── serverWordle/             # Server-validated mode
 │   │   └── page.tsx
-│   ├── absurdle/                 # Adaptive difficulty mode
+│   ├── absurdle/                 # absurdle
 │   │   └── page.tsx
 │   ├── multiplayer/              # Two-player mode vs bot
 │   │   ├── page.tsx
@@ -137,23 +137,22 @@ wordle_clone/
 │   │   └── game/                 # Game session management
 │   │       └── route.ts          # REST endpoints for server mode
 │   ├── globals.css               # Global styles
-│   ├── wordle.css                # Shared game styling
 │   ├── layout.tsx                # Root layout
 │   └── page.tsx                  # Home page
-├── utils/                        # Utility functions
-│   ├── wordleUtils.ts            # Game logic and SmartBot class
+├── utils/
+│   ├── wordleUtils.ts            # Game logic and Bot class
 │   └── shared/                   # Shared utility functions
 │       └── keyboardUtils.ts      # Keyboard handling utilities
-├── gameConfigs.ts                # Centralized game constants
-├── types.ts                      # Centralized TypeScript types
+├── gameConfigs.ts                # game constants
+├── types.ts                      # TypeScript types
 ├── data/                         # Data storage
 │   └── games.json                # Game sessions storage
-├── public/                       # Static assets
-├── README.md                     # This file
-├── package.json                  # Dependencies and scripts
-├── tsconfig.json                 # TypeScript config with @ path alias
-├── tailwind.config.ts            # Tailwind configuration
-└── next.config.mjs               # Next.js configuration
+├── public/
+├── README.md
+├── package.json
+├── tsconfig.json
+├── tailwind.config.ts
+└── next.config.mjs
 ```
 
 ## 📝 License
