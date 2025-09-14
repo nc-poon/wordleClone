@@ -6,6 +6,7 @@ import GameStats from "@/app/components/shared/GameStats";
 import GameOverModal from "@/app/components/shared/GameOverModal";
 import LoadingSpinner from "@/app/components/shared/LoadingSpinner";
 import GuessInput from "@/app/components/shared/GuessInput";
+import BackToHome from "@/app/components/shared/BackToHome";
 import { WORD_LENGTH } from "@/gameConfigs";
 import { LetterResult, GameSession } from "@/types";
 import {
@@ -24,7 +25,7 @@ export default function ServerWordle() {
 
   // create new game session
   const createGameSession = async (): Promise<GameSession> => {
-    const response = await fetch("/wordle_api/game", {
+    const response = await fetch("/game/wordle_api/game", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ action: "create" }),
@@ -47,7 +48,7 @@ export default function ServerWordle() {
     gameOver: boolean;
     won: boolean;
   }> => {
-    const response = await fetch("/wordle_api/game", {
+    const response = await fetch("/game/wordle_api/game", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
@@ -129,6 +130,9 @@ export default function ServerWordle() {
       onKeyDown={handleKeyPress}
       tabIndex={0}
     >
+      <div className="mb-4">
+        <BackToHome />
+      </div>
       <GameHeader
         title="Server/Client Wordle"
         subtitle="All validation happens on the server."

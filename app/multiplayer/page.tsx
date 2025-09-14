@@ -3,6 +3,7 @@ import { useState, useEffect, useRef, useCallback } from "react";
 import WordleBoard from "@/app/components/wordle/WordleBoard";
 import GameHeader from "@/app/components/shared/GameHeader";
 import GuessInput from "@/app/components/shared/GuessInput";
+import BackToHome from "@/app/components/shared/BackToHome";
 import {
   SmartBot,
   calculateScore,
@@ -550,6 +551,9 @@ export default function MultiplayerWordle() {
 
   return (
     <div className="two-player-wordle" onKeyDown={handleKeyPress} tabIndex={0}>
+      <div className="mb-4">
+        <BackToHome />
+      </div>
       <GameHeader
         title="Two Player Wordle"
         subtitle={`You ${gameScore.player} - ${gameScore.bot} Bot | Round ${

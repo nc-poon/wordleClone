@@ -6,6 +6,7 @@ import GameStats from "@/app/components/shared/GameStats";
 import GameOverModal from "@/app/components/shared/GameOverModal";
 import LoadingSpinner from "@/app/components/shared/LoadingSpinner";
 import GuessInput from "@/app/components/shared/GuessInput";
+import BackToHome from "@/app/components/shared/BackToHome";
 import { getRandomWord, isGameOver, hasWon } from "@/utils/wordleUtils";
 import { WORD_LENGTH, DEBUG } from "@/gameConfigs";
 import {
@@ -72,6 +73,9 @@ export default function NormalWordle() {
 
   return (
     <div className="game-container" onKeyDown={handleKeyPress} tabIndex={0}>
+      <div className="mb-4">
+        <BackToHome />
+      </div>
       <GameHeader title="Normal Wordle" subtitle="Classic wordle" />
       <div className="mb-6">
         <WordleBoard

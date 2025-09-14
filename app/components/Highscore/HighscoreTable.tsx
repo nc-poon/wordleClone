@@ -10,8 +10,8 @@ export default function HighscoreTable() {
   });
   const [isLoaded, setIsLoaded] = useState(false);
 
-  // Load score from localStorage after hydration
-  useEffect(() => {
+  // Function to load score from localStorage
+  const loadScore = () => {
     if (typeof window !== "undefined") {
       const savedScore = localStorage.getItem("wordleMultiplayerScore");
       if (savedScore) {
@@ -24,6 +24,11 @@ export default function HighscoreTable() {
       }
       setIsLoaded(true);
     }
+  };
+
+  // Load score from localStorage after hydration
+  useEffect(() => {
+    loadScore();
   }, []);
 
   // Don't show anything if no games have been played
@@ -42,9 +47,18 @@ export default function HighscoreTable() {
 
   return (
     <div className="highscore-table card p-6 max-w-md mx-auto mb-8">
-      <h3 className="text-xl font-semibold text-slate-800 mb-4 text-center">
-        🏆 Multiplayer Stats
-      </h3>
+      <div className="flex justify-between items-center mb-4">
+        <h3 className="text-xl font-semibold text-slate-800">
+          🏆 Multiplayer Stats
+        </h3>
+        <button
+          onClick={loadScore}
+          className="px-3 py-1 text-sm bg-slate-100 hover:bg-slate-200 text-slate-700 rounded-md transition-colors"
+          title="Refresh scores"
+        >
+          🔄
+        </button>
+      </div>
 
       <div className="stats-grid space-y-4">
         {/* Overall Score */}
