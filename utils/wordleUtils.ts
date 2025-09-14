@@ -136,7 +136,10 @@ export class SmartBot {
     private triedPositions: Map<string, Set<number>> = new Map();
     private guessHistory: string[] = [];
 
-    // init
+    // Track letter frequency constraints
+    private letterMinCount: Map<string, number> = new Map(); // minimum known count
+    private letterMaxCount: Map<string, number> = new Map(); // maximum possible count
+
     constructor() {
         this.reset();
     }
@@ -145,8 +148,10 @@ export class SmartBot {
         this.correctLetters = {};
         this.presentLetters = new Set();
         this.absentLetters = new Set();
-        this.triedPositions = new Map(); // value and position
+        this.triedPositions = new Map();
         this.guessHistory = [];
+        this.letterMinCount = new Map();
+        this.letterMaxCount = new Map();
     }
 
     // Generate best first guess (vowel-heavy strategy)
@@ -160,44 +165,6 @@ export class SmartBot {
         return firstGuess;
     }
 
-    // Update constraints based on feedback
-    updateConstraints(guess: string, result: LetterResult[]) {
-        this.guessHistory.push(guess);
-        console.log(`SmartBot updating constraints for guess: ${guess}`, result);
-
-        for (let i = 0; i < result.length; i++) {
-            const letter = result[i].letter;
-            const status = result[i].status;
-
-            if (status === "correct") {
-                // Letter is in correct position
-                this.correctLetters[i] = letter;
-                console.log(`  Correct: ${letter} at position ${i}`);
-
-            } else if (status === "present") {
-                // Letter exists but wrong position
-                this.presentLetters.add(letter);
-
-                // Track that this position doesn't work for this letter
-                if (!this.triedPositions.has(letter)) {
-                    this.triedPositions.set(letter, new Set());
-                }
-                this.triedPositions.get(letter)!.add(i);
-                console.log(`  Present: ${letter} not at position ${i}`);
-
-            } else {
-                // Letter doesn't exist (unless we know it exists from other positions)
-                if (!this.presentLetters.has(letter)) {
-                    this.absentLetters.add(letter);
-                    console.log(`  Absent: ${letter}`);
-                }
-            }
-        }
-
-        console.log('Current bot knowledge:', this.getDebugInfo());
-    }
-
-
     // Get next best guess using elimination strategy
     getNextGuess(guessCount: number): string {
         if (guessCount === 0) {
@@ -208,60 +175,163 @@ export class SmartBot {
         return this.buildStrategicGuess();
     }
 
+    // Update constraints based on feedback
+    updateConstraints(guess: string, result: LetterResult[]) {
+        this.guessHistory.push(guess);
+        console.log(`SmartBot updating constraints for guess: ${guess}`, result);
+
+        // Count how many of each letter we found in this guess
+        const foundCounts = new Map<string, number>();
+        const correctPositions = new Set<number>();
+
+        // First pass: count what we found and mark correct positions
+        for (let i = 0; i < result.length; i++) {
+            const letter = result[i].letter;
+            const status = result[i].status;
+
+            if (status === "correct") {
+                correctPositions.add(i);
+                this.correctLetters[i] = letter;
+                foundCounts.set(letter, (foundCounts.get(letter) || 0) + 1);
+            } else if (status === "present") {
+                foundCounts.set(letter, (foundCounts.get(letter) || 0) + 1);
+            }
+        }
+
+        // Second pass: update letter status and constraints
+        for (let i = 0; i < result.length; i++) {
+            const letter = result[i].letter;
+            const status = result[i].status;
+
+            if (status === "correct") {
+                // Remove from present letters since we now know exact position
+                this.presentLetters.delete(letter);
+                // Remove from absent letters
+                this.absentLetters.delete(letter);
+
+                console.log(`  Correct: ${letter} at position ${i}`);
+
+            } else if (status === "present") {
+                this.presentLetters.add(letter);
+                // Remove from absent letters
+                this.absentLetters.delete(letter);
+
+                // Track failed positions
+                if (!this.triedPositions.has(letter)) {
+                    this.triedPositions.set(letter, new Set());
+                }
+                this.triedPositions.get(letter)!.add(i);
+                console.log(`  Present: ${letter} not at position ${i}`);
+
+            } else { // absent
+                // Only mark as completely absent if we have no evidence it exists
+                const totalFound = foundCounts.get(letter) || 0;
+                const isKnownToExist = this.presentLetters.has(letter) ||
+                    Object.values(this.correctLetters).includes(letter);
+
+                if (totalFound === 0 && !isKnownToExist) {
+                    this.absentLetters.add(letter);
+                    this.letterMaxCount.set(letter, 0);
+                    console.log(`  Absent: ${letter}`);
+                }
+            }
+        }
+
+        // Update letter frequency constraints
+        this.updateLetterCounts(guess, result, foundCounts);
+
+        console.log('Current bot knowledge:', this.getDebugInfo());
+    }
+
+    private updateLetterCounts(guess: string, result: LetterResult[], foundCounts: Map<string, number>) {
+        // For each unique letter in the guess
+        const uniqueLetters = new Set(guess.split(''));
+
+        for (const letter of uniqueLetters) {
+            const totalInGuess = guess.split('').filter(l => l === letter).length;
+            const foundCount = foundCounts.get(letter) || 0;
+
+            // Update minimum count (we know at least this many exist)
+            const currentMin = this.letterMinCount.get(letter) || 0;
+            this.letterMinCount.set(letter, Math.max(currentMin, foundCount));
+
+            // Update maximum count if we hit the limit
+            if (foundCount < totalInGuess) {
+                // We tried more than we found, so we know the exact count
+                this.letterMaxCount.set(letter, foundCount);
+            }
+
+            console.log(`  Letter ${letter}: min=${this.letterMinCount.get(letter)}, max=${this.letterMaxCount.get(letter) || 'unknown'}`);
+        }
+    }
+
     // Build a strategic guess based on known information
     private buildStrategicGuess(): string {
         const guess = ['', '', '', '', ''];
-        const usedLetters = new Set<string>();
+        const usedLetters = new Map<string, number>(); // track count of each letter used
 
         // First, place all known correct letters
         for (const pos in this.correctLetters) {
             const position = parseInt(pos);
             const letter = this.correctLetters[position];
             guess[position] = letter;
-            usedLetters.add(letter);
+            usedLetters.set(letter, (usedLetters.get(letter) || 0) + 1);
         }
 
-        // Then, for correct value wrong pos try new pos
+        // Then, place present letters in valid positions
         for (const letter of this.presentLetters) {
-            const triedPositions = this.triedPositions.get(letter) || new Set();
+            const currentCount = usedLetters.get(letter) || 0;
+            const minNeeded = this.letterMinCount.get(letter) || 1;
+            const maxAllowed = this.letterMaxCount.get(letter) || 5;
 
-            // Find an empty position that hasn't been tried
-            for (let pos = 0; pos < 5; pos++) {
-                if (guess[pos] === '' && !triedPositions.has(pos)) {
-                    guess[pos] = letter;
-                    usedLetters.add(letter);
-                    break;
+            // Only place if we haven't reached the maximum and still need more
+            if (currentCount < minNeeded && currentCount < maxAllowed) {
+                const triedPositions = this.triedPositions.get(letter) || new Set();
+
+                // Find an empty position that hasn't been tried
+                for (let pos = 0; pos < 5; pos++) {
+                    if (guess[pos] === '' && !triedPositions.has(pos)) {
+                        guess[pos] = letter;
+                        usedLetters.set(letter, currentCount + 1);
+                        break;
+                    }
                 }
             }
         }
 
-        // Fill remaining positions char not in absent list
+        // Fill remaining positions with unused letters
         for (let pos = 0; pos < 5; pos++) {
             if (guess[pos] === '') {
                 const availableLetters = [];
-                for (let charCode = 65; charCode <= 90; charCode++) { // A=65 to Z=90
+
+                for (let charCode = 65; charCode <= 90; charCode++) {
                     const letter = String.fromCharCode(charCode);
-                    if (!this.absentLetters.has(letter)) {
+                    const currentCount = usedLetters.get(letter) || 0;
+                    const maxAllowed = this.letterMaxCount.get(letter);
+
+                    // Skip if letter is known to be absent or we've used maximum allowed
+                    if (!this.absentLetters.has(letter) &&
+                        (maxAllowed === undefined || currentCount < maxAllowed)) {
                         availableLetters.push(letter);
                     }
                 }
 
-                // Pick a random available char
                 if (availableLetters.length > 0) {
                     const randomIndex = Math.floor(Math.random() * availableLetters.length);
                     const selectedLetter = availableLetters[randomIndex];
                     guess[pos] = selectedLetter;
+                    usedLetters.set(selectedLetter, (usedLetters.get(selectedLetter) || 0) + 1);
                 }
             }
         }
 
-        const result = guess.join(''); // join the char to string
+        const result = guess.join('');
         console.log('SmartBot strategic guess:', result);
         return result || getRandomWord();
     }
 
     // Get debug information about bot's current knowledge
-    getDebugInfo(): { correctLetters: any; presentLetters: string[]; absentLetters: string[]; triedPositions: any } {
+    getDebugInfo(): { correctLetters: any; presentLetters: string[]; absentLetters: string[]; triedPositions: any; letterMinCount: any; letterMaxCount: any } {
         return {
             correctLetters: this.correctLetters,
             presentLetters: Array.from(this.presentLetters),
@@ -271,7 +341,9 @@ export class SmartBot {
                     letter,
                     Array.from(positions)
                 ])
-            )
+            ),
+            letterMinCount: Object.fromEntries(this.letterMinCount),
+            letterMaxCount: Object.fromEntries(this.letterMaxCount)
         };
     }
 }
