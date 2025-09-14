@@ -33,7 +33,7 @@ The application will be available at `http://localhost:3000/game` (or `http://lo
 
 ## 🎮 Game Modes
 
-### Debugging is enabled by default, disable it by setting DEBUG = false in gameConfigs.ts, it will hide the target words during the game
+### Debugging is disabled by default, enable it by setting DEBUG = true in gameConfigs.ts, it will hide the target words during the game
 
 ### 1. Classic Mode
 
