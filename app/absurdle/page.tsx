@@ -8,7 +8,6 @@ import LoadingSpinner from "@/app/components/shared/LoadingSpinner";
 import GuessInput from "@/app/components/shared/GuessInput";
 import BackToHome from "@/app/components/shared/BackToHome";
 import {
-  getRandomWord,
   isGameOver,
   hasWon,
   findAbsurdleCandidates,
@@ -26,18 +25,35 @@ export default function Absurdle() {
   const [gameOver, setGameOver] = useState<boolean>(false);
   const [won, setWon] = useState<boolean>(false);
   const [loading, setLoading] = useState<boolean>(false);
-  const [candidates, setCandidates] = useState<string[]>(WORDS);
+  const [candidates, setCandidates] = useState<string[]>([]);
+
+  // Get 30 random words from the full list, list too big
+  const getRandomCandidates = (): string[] => {
+    const usedIndices = new Set<number>();
+    const selectedWords: string[] = [];
+
+    while (selectedWords.length < 30) {
+      const randomIndex = Math.floor(Math.random() * WORDS.length);
+      if (!usedIndices.has(randomIndex)) {
+        usedIndices.add(randomIndex);
+        selectedWords.push(WORDS[randomIndex]);
+      }
+    }
+
+    return selectedWords;
+  };
 
   // Initialize game
   const initializeGame = () => {
     setLoading(true);
-    const word = getRandomWord();
+    const randomCandidates = getRandomCandidates();
+    const word = randomCandidates[0]; // Use first candidate as initial target
     setTargetWord(word);
     setGuesses([]);
     setCurrentGuess("");
     setGameOver(false);
     setWon(false);
-    setCandidates([...WORDS]);
+    setCandidates(randomCandidates);
     setLoading(false);
   };
 
