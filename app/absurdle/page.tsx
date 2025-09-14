@@ -6,6 +6,7 @@ import GameStats from "@/app/components/shared/GameStats";
 import GameOverModal from "@/app/components/shared/GameOverModal";
 import LoadingSpinner from "@/app/components/shared/LoadingSpinner";
 import GuessInput from "@/app/components/shared/GuessInput";
+import BackToHome from "@/app/components/shared/BackToHome";
 import {
   getRandomWord,
   isGameOver,
@@ -99,6 +100,9 @@ export default function Absurdle() {
       onKeyDown={handleKeyPress}
       tabIndex={0}
     >
+      <div className="mb-4">
+        <BackToHome />
+      </div>
       <GameHeader
         title="Absurdle (Host Cheating)"
         subtitle="The word changes to avoid your guesses! Can you beat the cheating host?"
