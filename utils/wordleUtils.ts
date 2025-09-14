@@ -109,7 +109,6 @@ export async function isValidWord(word: string): Promise<boolean> {
         return false;
     }
 
-    console.log(word)
     // Check our word list first (fast)
     if (WORDS.includes(word)) {
         return true;
@@ -306,28 +305,43 @@ export class SmartBot {
             usedLetters.set(letter, (usedLetters.get(letter) || 0) + 1);
         }
 
-        // Then, place present letters in valid positions
-        for (const letter of this.presentLetters) {
-            const currentCount = usedLetters.get(letter) || 0;
-            const minNeeded = this.letterMinCount.get(letter) || 1;
-            const maxAllowed = this.letterMaxCount.get(letter) || 5;
-
-            // Only place if we haven't reached the maximum and still need more
-            if (currentCount < minNeeded && currentCount < maxAllowed) {
-                const triedPositions = this.triedPositions.get(letter) || new Set();
-
-                // Find an empty position that hasn't been tried
+        // Now try to find a word from our list that fits the constraints
+        const partialGuess = guess.join('');
+        if (partialGuess.includes('')) {
+            // Find words that match our constraints
+            const candidateWords = WORDS.filter(word => {
+                // Check if word matches known correct positions
                 for (let pos = 0; pos < 5; pos++) {
-                    if (guess[pos] === '' && !triedPositions.has(pos)) {
-                        guess[pos] = letter;
-                        usedLetters.set(letter, currentCount + 1);
-                        break;
+                    if (guess[pos] !== '' && word[pos] !== guess[pos]) {
+                        return false;
                     }
                 }
+
+                // Check if word contains required present letters
+                for (const letter of this.presentLetters) {
+                    if (!word.includes(letter)) {
+                        return false;
+                    }
+                }
+
+                // Check if word avoids absent letters
+                for (const letter of this.absentLetters) {
+                    if (word.includes(letter)) {
+                        return false;
+                    }
+                }
+
+                return true;
+            });
+
+            if (candidateWords.length > 0) {
+                const result = candidateWords[Math.floor(Math.random() * candidateWords.length)];
+                console.log('SmartBot strategic guess from word list:', result);
+                return result;
             }
         }
 
-        // Fill remaining positions with unused letters
+        // Fill remaining positions with unused letters (fallback)
         for (let pos = 0; pos < 5; pos++) {
             if (guess[pos] === '') {
                 const availableLetters = [];
