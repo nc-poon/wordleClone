@@ -7,7 +7,7 @@ export const WORDS = [
     "HELLO", "WORLD", "QUITE", "FANCY", "FRESH", "PANIC", "CRAZY", "BUGGY",
     "BRAVE", "GHOST", "CHAIR", "MAGIC", "PHONE", "QUICK", "SMILE", "DANCE",
     "LIGHT", "WATER", "BEACH", "MUSIC", "PEACE", "HAPPY", "DREAM", "STORY",
-    "CLOUD", "FRUIT", "SPACE", "HEART", "BLOOM", "STONE", "RIVER", "FOREST"
+    "CLOUD", "FRUIT", "SPACE", "HEART", "BLOOM", "STONE", "RIVER"
 ];
 
 
