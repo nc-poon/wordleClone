@@ -1,4 +1,4 @@
-# 🎯 Five-Letter Word Game
+# 🎯 WordleClone
 
 **Note**: This project is not affiliated with or endorsed by The New York Times Company or the original Wordle game.
 
@@ -14,7 +14,7 @@
 ```bash
 # Clone the repository
 git clone <repository-url>
-cd five-letter-word-game
+cd wordleClone
 
 # Install dependencies
 npm install
