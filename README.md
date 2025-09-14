@@ -29,6 +29,8 @@ npm start
 
 The application will be available at `http://localhost:3000/game` (or `http://localhost:3001/game` if port 3000 is in use).
 
+# You can now play the game at https://tobyverse.app/game
+
 ## 🎮 Game Modes
 
 ### Debugging is enabled by default, disable it by setting DEBUG = false in gameConfigs.ts, it will hide the target words during the game
