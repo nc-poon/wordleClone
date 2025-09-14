@@ -102,9 +102,33 @@ export function findAbsurdleCandidates(guess: string, candidates: string[]): str
 }
 
 /**
+ * Validate if a word exists - check our list first, then API
+ */
+export async function isValidWord(word: string): Promise<boolean> {
+    if (!isCorrectLength(word)) {
+        return false;
+    }
+
+    console.log(word)
+    // Check our word list first (fast)
+    if (WORDS.includes(word)) {
+        return true;
+    }
+
+    // If not in our list, check API
+    try {
+        const response = await fetch(`https://api.dictionaryapi.dev/api/v2/entries/en/${word.toLowerCase()}`);
+        return response.ok;
+    } catch (error) {
+        console.warn('Word validation API failed:', error);
+        return true; // Allow word if API fails
+    }
+}
+
+/**
  * Validate if a string is a valid 5-letter word
  */
-export function isValidWord(word: string): boolean {
+export function isCorrectLength(word: string): boolean {
     return word.length === WORD_LENGTH && /^[A-Z]{5}$/.test(word);
 }
 

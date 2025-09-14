@@ -9,6 +9,7 @@ import GuessInput from "@/app/components/shared/GuessInput";
 import BackToHome from "@/app/components/shared/BackToHome";
 import { WORD_LENGTH } from "@/gameConfigs";
 import { LetterResult, GameSession } from "@/types";
+import { isValidWord } from "@/utils/wordleUtils";
 import {
   createKeyboardHandler,
   createInputChangeHandler,
@@ -22,6 +23,7 @@ export default function ServerWordle() {
   const [won, setWon] = useState<boolean>(false);
   const [loading, setLoading] = useState<boolean>(false);
   const [allResults, setAllResults] = useState<LetterResult[][]>([]);
+  const [targetWord, setTargetWord] = useState<string>("");
 
   // create new game session
   const createGameSession = async (): Promise<GameSession> => {
@@ -47,6 +49,7 @@ export default function ServerWordle() {
     isCorrect: boolean;
     gameOver: boolean;
     won: boolean;
+    targetWord?: string;
   }> => {
     const response = await fetch("/game/wordle_api/game", {
       method: "POST",
@@ -76,6 +79,7 @@ export default function ServerWordle() {
       setGameOver(false);
       setWon(false);
       setAllResults([]);
+      setTargetWord("");
       setLoading(false);
     } catch (error) {
       console.error("Failed to initialize server:", error);
@@ -87,6 +91,14 @@ export default function ServerWordle() {
   const makeGuess = async () => {
     if (currentGuess.length !== WORD_LENGTH || gameOver || loading || !gameId)
       return;
+    
+    // Validate word first
+    const wordIsValid = await isValidWord(currentGuess);
+    if (!wordIsValid) {
+      alert("Not a valid word!");
+      return;
+    }
+    
     setLoading(true);
     try {
       const result = await submitGuess(gameId, currentGuess);
@@ -97,6 +109,11 @@ export default function ServerWordle() {
 
       setWon(result.won);
       setGameOver(result.gameOver);
+      
+      // Set target word if game is over
+      if (result.gameOver && result.targetWord) {
+        setTargetWord(result.targetWord);
+      }
     } catch (error) {
       console.error("Failed to make guess:", error);
     }
@@ -159,6 +176,7 @@ export default function ServerWordle() {
         gameOver={gameOver}
         won={won}
         guessCount={guesses.length}
+        targetWord={targetWord}
         gameId={gameId}
         onPlayAgain={initializeGame}
         playAgainText="🔄 New Game Session"

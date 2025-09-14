@@ -10,6 +10,7 @@ import {
   checkGuess,
   getRandomWord,
   isValidWord,
+  isCorrectLength,
 } from "@/utils/wordleUtils";
 import { createKeyboardHandler } from "@/utils/shared/keyboardUtils";
 import {
@@ -127,17 +128,17 @@ export default function MultiplayerWordle() {
   }, []);
 
   // Initialize a new round
-  const initializeRound = useCallback(() => {
+  const initializeRound = useCallback(async () => {
     let playerTarget = "";
     let botTarget = "";
 
     const currentCustomWord = customWordRef.current;
-    if (wordSelectionMode === "custom" && isValidWord(currentCustomWord)) {
+    if (wordSelectionMode === "custom" && await isValidWord(currentCustomWord)) {
       botTarget = currentCustomWord; // Player gives word to bot
-      playerTarget = getRandomWord(); // Bot gives random word to player
+      playerTarget = await getRandomWord(); // Bot gives random word to player
     } else {
-      botTarget = getRandomWord();
-      playerTarget = getRandomWord();
+      botTarget = await getRandomWord();
+      playerTarget = await getRandomWord();
     }
 
     setPlayerState({
@@ -366,7 +367,7 @@ export default function MultiplayerWordle() {
   );
 
   // Make player guess
-  const makePlayerGuess = useCallback(() => {
+  const makePlayerGuess = useCallback(async () => {
     if (
       playerState.currentGuess.length !== WORD_LENGTH ||
       playerState.gameOver ||
@@ -375,6 +376,14 @@ export default function MultiplayerWordle() {
       return;
 
     const guess = playerState.currentGuess.toUpperCase();
+    
+    // Validate word first
+    const wordIsValid = await isValidWord(guess);
+    if (!wordIsValid) {
+      alert("Not a valid word!");
+      return;
+    }
+
     const newGuesses = [...playerState.guesses, guess];
     const won = guess === playerState.targetWord;
     const gameOver = won || newGuesses.length >= MAX_GUESSES;
@@ -634,8 +643,8 @@ export default function MultiplayerWordle() {
                 placeholder="ENTER WORD"
                 autoFocus
               />
-              {isValidWord(customWord) && (
-                <div className="text-green-600 text-sm mt-2">✓ Valid word!</div>
+              {isCorrectLength(customWord) && (
+                <div className="text-green-600 text-sm mt-2">✓ Valid format!</div>
               )}
             </div>
           )}
@@ -643,7 +652,7 @@ export default function MultiplayerWordle() {
           <button
             onClick={skipWordSelection}
             disabled={
-              wordSelectionMode === "custom" && !isValidWord(customWord)
+              wordSelectionMode === "custom" && !isCorrectLength(customWord)
             }
             className="btn-primary w-full disabled:opacity-50 disabled:cursor-not-allowed"
           >

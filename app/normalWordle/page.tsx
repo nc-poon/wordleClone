@@ -7,7 +7,7 @@ import GameOverModal from "@/app/components/shared/GameOverModal";
 import LoadingSpinner from "@/app/components/shared/LoadingSpinner";
 import GuessInput from "@/app/components/shared/GuessInput";
 import BackToHome from "@/app/components/shared/BackToHome";
-import { getRandomWord, isGameOver, hasWon } from "@/utils/wordleUtils";
+import { getRandomWord, isGameOver, hasWon, isValidWord } from "@/utils/wordleUtils";
 import { WORD_LENGTH, DEBUG } from "@/gameConfigs";
 import {
   createKeyboardHandler,
@@ -35,8 +35,15 @@ export default function NormalWordle() {
   };
 
   // Make a guess
-  const makeGuess = () => {
+  const makeGuess = async () => {
     if (currentGuess.length !== WORD_LENGTH || gameOver || loading) return;
+
+    // Validate word first
+    const wordIsValid = await isValidWord(currentGuess);
+    if (!wordIsValid) {
+      alert("Not a valid word!");
+      return;
+    }
 
     // add to list of guesses
     const newGuesses = [...guesses, currentGuess];

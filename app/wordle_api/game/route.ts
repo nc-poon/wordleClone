@@ -71,7 +71,9 @@ export async function GET(request: NextRequest) {
       gameOver: game.gameOver,
       won: game.won,
       createdAt: game.createdAt,
-      lastUpdated: game.lastUpdated
+      lastUpdated: game.lastUpdated,
+      // Only reveal target word when game is over
+      ...(game.gameOver && { targetWord: game.targetWord })
     });
   } catch (error) {
     console.error('Error retrieving game:', error);

@@ -11,6 +11,7 @@ import {
   isGameOver,
   hasWon,
   findAbsurdleCandidates,
+  isValidWord,
 } from "@/utils/wordleUtils";
 import {
   createKeyboardHandler,
@@ -58,8 +59,15 @@ export default function Absurdle() {
   };
 
   // Make a guess with absurdle logic
-  const makeGuess = () => {
+  const makeGuess = async () => {
     if (currentGuess.length !== WORD_LENGTH || gameOver || loading) return;
+
+    // Validate word first
+    const wordIsValid = await isValidWord(currentGuess);
+    if (!wordIsValid) {
+      alert("Not a valid word!");
+      return;
+    }
 
     // Find candidates that give least helpful feedback
     const candidatesResult = findAbsurdleCandidates(currentGuess, candidates);
