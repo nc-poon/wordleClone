@@ -11,6 +11,7 @@ import {
   getRandomWord,
   isValidWord,
   isCorrectLength,
+  BotDifficulty,
 } from "@/utils/wordleUtils";
 import { createKeyboardHandler } from "@/utils/shared/keyboardUtils";
 import {
@@ -53,8 +54,9 @@ export default function MultiplayerWordle() {
   const [isScoreLoaded, setIsScoreLoaded] = useState(false);
   const [countdown, setCountdown] = useState(WORD_SELECTION_TIME);
   const [nextRoundCountdown, setNextRoundCountdown] = useState(0);
+  const [botDifficulty, setBotDifficulty] = useState<BotDifficulty>('medium');
   const customWordRef = useRef("");
-  const smartBot = useRef(new SmartBot());
+  const smartBot = useRef(new SmartBot('medium'));
   const lastKeyPressRef = useRef<string>("");
   const lastKeyTimeRef = useRef<number>(0);
   const timersRef = useRef<{
@@ -498,6 +500,12 @@ export default function MultiplayerWordle() {
     setCustomWord("");
   }, []);
 
+  // Handle difficulty change
+  const handleDifficultyChange = useCallback((difficulty: BotDifficulty) => {
+    setBotDifficulty(difficulty);
+    smartBot.current.setDifficulty(difficulty);
+  }, []);
+
   // Skip word selection and start playing
   const skipWordSelection = useCallback(() => {
     if (timersRef.current.wordSelection) {
@@ -602,6 +610,44 @@ export default function MultiplayerWordle() {
                   className="mr-2"
                 />
                 I choose a word for the bot
+              </label>
+            </div>
+          </div>
+
+          <div className="mb-6">
+            <label className="block text-sm font-medium text-slate-700 mb-3">
+              Bot Difficulty:
+            </label>
+            <div className="space-y-2">
+              <label className="flex items-center">
+                <input
+                  type="radio"
+                  value="easy"
+                  checked={botDifficulty === "easy"}
+                  onChange={(e) => handleDifficultyChange(e.target.value as BotDifficulty)}
+                  className="mr-2"
+                />
+                Easy (30% random moves)
+              </label>
+              <label className="flex items-center">
+                <input
+                  type="radio"
+                  value="medium"
+                  checked={botDifficulty === "medium"}
+                  onChange={(e) => handleDifficultyChange(e.target.value as BotDifficulty)}
+                  className="mr-2"
+                />
+                Medium (20% random moves)
+              </label>
+              <label className="flex items-center">
+                <input
+                  type="radio"
+                  value="hard"
+                  checked={botDifficulty === "hard"}
+                  onChange={(e) => handleDifficultyChange(e.target.value as BotDifficulty)}
+                  className="mr-2"
+                />
+                Hard (always strategic)
               </label>
             </div>
           </div>

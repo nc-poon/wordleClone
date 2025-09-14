@@ -152,18 +152,22 @@ export function calculateScore(guesses: string[], target: string): number {
 }
 
 
+export type BotDifficulty = 'easy' | 'medium' | 'hard';
+
 export class SmartBot {
     private correctLetters: { [pos: number]: string } = {};
     private presentLetters: Set<string> = new Set();
     private absentLetters: Set<string> = new Set();
     private triedPositions: Map<string, Set<number>> = new Map();
     private guessHistory: string[] = [];
+    private difficulty: BotDifficulty;
 
     // Track letter frequency constraints
     private letterMinCount: Map<string, number> = new Map(); // minimum known count
     private letterMaxCount: Map<string, number> = new Map(); // maximum possible count
 
-    constructor() {
+    constructor(difficulty: BotDifficulty = 'medium') {
+        this.difficulty = difficulty;
         this.reset();
     }
 
@@ -175,6 +179,12 @@ export class SmartBot {
         this.guessHistory = [];
         this.letterMinCount = new Map();
         this.letterMaxCount = new Map();
+    }
+
+    // Change bot difficulty
+    setDifficulty(difficulty: BotDifficulty) {
+        this.difficulty = difficulty;
+        console.log(`SmartBot difficulty set to: ${difficulty}`);
     }
 
     // Generate best first guess (vowel-heavy strategy)
@@ -294,6 +304,18 @@ export class SmartBot {
 
     // Build a strategic guess based on known information
     private buildStrategicGuess(): string {
+        // Check if bot should skip analysis based on difficulty
+        const skipChances = {
+            'easy': 0.3,   // 30% chance to skip analysis
+            'medium': 0.2, // 20% chance to skip analysis  
+            'hard': 0.0    // 0% chance to skip analysis
+        };
+        
+        if (Math.random() < skipChances[this.difficulty]) {
+            console.log(`SmartBot (${this.difficulty}) making random guess`);
+            return getRandomWord();
+        }
+
         const guess = ['', '', '', '', ''];
         const usedLetters = new Map<string, number>(); // track count of each letter used
 
