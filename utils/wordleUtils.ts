@@ -11,25 +11,39 @@ export function checkGuess(guess: string, target: string): LetterResult[] {
         console.error('invalid inputs:', { guess, target });
         return [];
     }
+
     const result: LetterResult[] = [];
-    // into array of single char
     const targetLetters = target.split("");
     const guessLetters = guess.split("");
-    // loop both and check each element
+
+    // First pass: mark all correct (exact matches)
+    const targetUsed = new Array(target.length).fill(false);
+
     for (let i = 0; i < guessLetters.length; i++) {
-        // same value same pos
         if (guessLetters[i] === targetLetters[i]) {
             result.push({ letter: guessLetters[i], status: LETTER_STATUS.CORRECT });
-            // same value dif pos
-        } else if (targetLetters.includes(guessLetters[i])) {
-            result.push({ letter: guessLetters[i], status: LETTER_STATUS.PRESENT });
+            targetUsed[i] = true;
         } else {
-            result.push({ letter: guessLetters[i], status: LETTER_STATUS.ABSENT });
+            result.push({ letter: guessLetters[i], status: LETTER_STATUS.ABSENT }); // placeholder
         }
     }
+
+    // Second pass: check for present letters (wrong position)
+    for (let i = 0; i < guessLetters.length; i++) {
+        if (result[i].status === LETTER_STATUS.ABSENT) { // not already correct, handle dups
+            // Find unused matching letter in target
+            for (let j = 0; j < targetLetters.length; j++) {
+                if (!targetUsed[j] && guessLetters[i] === targetLetters[j]) {
+                    result[i] = { letter: guessLetters[i], status: LETTER_STATUS.PRESENT };
+                    targetUsed[j] = true;
+                    break;
+                }
+            }
+        }
+    }
+
     return result;
 }
-
 
 //  Get random word from the word list
 export function getRandomWord(): string {
