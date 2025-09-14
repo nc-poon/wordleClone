@@ -182,15 +182,13 @@ export class SmartBot {
 
         // Count how many of each letter we found in this guess
         const foundCounts = new Map<string, number>();
-        const correctPositions = new Set<number>();
 
-        // First pass: count what we found and mark correct positions
+        // First pass: count what we found and update correct positions
         for (let i = 0; i < result.length; i++) {
             const letter = result[i].letter;
             const status = result[i].status;
 
             if (status === "correct") {
-                correctPositions.add(i);
                 this.correctLetters[i] = letter;
                 foundCounts.set(letter, (foundCounts.get(letter) || 0) + 1);
             } else if (status === "present") {
@@ -204,16 +202,23 @@ export class SmartBot {
             const status = result[i].status;
 
             if (status === "correct") {
-                // Remove from present letters since we now know exact position
-                this.presentLetters.delete(letter);
                 // Remove from absent letters
                 this.absentLetters.delete(letter);
+
+                // Check if we need to remove from present letters
+                const correctCount = Object.values(this.correctLetters).filter(l => l === letter).length;
+                const minNeeded = this.letterMinCount.get(letter) || foundCounts.get(letter) || 1;
+
+                // Only remove from present if we have enough correct positions for this letter
+                if (correctCount >= minNeeded) {
+                    this.presentLetters.delete(letter);
+                    console.log(`  ${letter} removed from present - all instances accounted for`);
+                }
 
                 console.log(`  Correct: ${letter} at position ${i}`);
 
             } else if (status === "present") {
                 this.presentLetters.add(letter);
-                // Remove from absent letters
                 this.absentLetters.delete(letter);
 
                 // Track failed positions
@@ -224,7 +229,6 @@ export class SmartBot {
                 console.log(`  Present: ${letter} not at position ${i}`);
 
             } else { // absent
-                // Only mark as completely absent if we have no evidence it exists
                 const totalFound = foundCounts.get(letter) || 0;
                 const isKnownToExist = this.presentLetters.has(letter) ||
                     Object.values(this.correctLetters).includes(letter);
